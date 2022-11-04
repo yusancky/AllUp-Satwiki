@@ -1,6 +1,7 @@
 from mwclient import Site
 from re import compile, findall
 from selenium import webdriver
+from time import localtime, strftime
 
 URL = "https://voyager.jpl.nasa.gov/mission/status/"
 
@@ -12,7 +13,8 @@ page_source = browser.page_source
 ids = [1, 2]
 sections = ["km", "au", "kms", "aus", "speed", "lt"]
 
-voy_data = "{{ #switch: {{{id}}} | 1 = {{ #switch: {{{section}}} | km = data1 | au = data2 | kms = data3 | aus = data4 | speed = data5 | lt = data6 | #default = 请输入正确的选项名！}} | 2 = {{ #switch: {{{section}}} | km = data7 | au = data8 | kms = data9 | aus = data10 | speed = data11 | lt = data12 | #default = 请输入正确的选项名！}} | #default = 请输入正确的编号！ }}"
+voy_data = "{{ #switch: {{{id}}} | t = time | 1 = {{ #switch: {{{section}}} | km = data1 | au = data2 | kms = data3 | aus = data4 | speed = data5 | lt = data6 | #default = 请输入正确的选项名！}} | 2 = {{ #switch: {{{section}}} | km = data7 | au = data8 | kms = data9 | aus = data10 | speed = data11 | lt = data12 | #default = 请输入正确的选项名！}} | #default = 请输入正确的编号！ }}"
+voy_data = voy_data.replace("time", strftime("%Y年%m月%d日%H时", localtime()))
 
 cnt = 0
 
@@ -28,11 +30,11 @@ for id in ids:
 site = Site("sat.huijiwiki.com", scheme="http")
 site = Site(
     "sat.huijiwiki.com",
-    clients_useragent="Voyager-data/1.0.0 (umbrellacky@qq.com)",
+    clients_useragent="Voyager-data/1.1.0 (umbrellacky@qq.com)",
 )
 site.login("雨伞CKY", SATWIKI_PASSWORD)
 page = site.pages["模板:旅行者距离数据"]
 page.save(
     voy_data,
-    "Edit via Voyager Data/1.0.0 (umbrellacky@qq.com) powered by GitHub Actions",
+    "Edit via Voyager Data/1.1.0 (umbrellacky@qq.com) powered by GitHub Actions",
 )
