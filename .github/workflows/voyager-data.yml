@@ -1,7 +1,8 @@
-name: Edit
+name: Voyager Data
 
 on:
-  push:
+  schedule:
+    - cron:  '0 4 4,14,24 * *'
   workflow_dispatch:
 
 jobs:
@@ -16,4 +17,4 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
       - run: pip install -r ./requirements.txt
-      - run: python ./code.py
+      - run: python ./voyager-data.py
