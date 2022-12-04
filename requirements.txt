@@ -1,2 +1,2 @@
-mwclient==0.10.1
+pwiki==1.2.0
 selenium==4.5.0
