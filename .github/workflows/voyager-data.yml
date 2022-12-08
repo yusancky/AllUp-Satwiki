@@ -2,7 +2,7 @@ name: Voyager Data
 
 on:
   schedule:
-    - cron:  '0 4 4,14,24 * *'
+    - cron:  '9 1 9 * *'
   workflow_dispatch:
 
 jobs:
