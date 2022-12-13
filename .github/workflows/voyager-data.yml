@@ -22,3 +22,5 @@ jobs:
           cache: 'pip'
       - run: pip install -r requirements.txt
       - run: python voyager-data.py
+        env:
+          SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}

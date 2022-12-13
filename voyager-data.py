@@ -1,6 +1,7 @@
 # Copyright (c) yusancky. All rights reserved. 
 # Licensed under the Apache License 2.0. See License in the project root for license information. 
 
+from os import environ
 from pwiki.wiki import Wiki
 from re import compile,findall
 from selenium import webdriver
@@ -29,5 +30,5 @@ for id in [1,2]:
         findall_res = findall(data_re,page_source)
         voy_data = voy_data.replace(f"data{cnt} ",f"{findall_res[0]} ")
 
-wiki = Wiki("sat.huijiwiki.com","雨伞CKY",SATWIKI_PASSWORD)
-wiki.edit("模板:旅行者距离数据",generate_data(),"Edit via auto-update-satwiki@1.3.0 / powered by GitHub Actions")
+wiki = Wiki("sat.huijiwiki.com","雨伞CKY",environ["SATWIKI_PASSWORD"])
+wiki.edit("模板:旅行者距离数据",generate_data(),"Edit via auto-update-satwiki@1.3.1 / powered by GitHub Actions")
