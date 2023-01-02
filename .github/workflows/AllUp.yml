@@ -1,4 +1,4 @@
-name: Voyager Data
+name: AllUp
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  edit:
+  AllUp:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
