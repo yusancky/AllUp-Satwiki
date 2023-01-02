@@ -20,7 +20,9 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-      - run: pip install -r requirements.txt
-      - run: python voyager-data.py
+      - name: Install Python Dependencies
+        run: pip install -r requirements.txt
+      - name: AllUp
+        run: python AllUp.py
         env:
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
