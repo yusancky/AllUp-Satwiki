@@ -5,13 +5,9 @@ from os import environ
 from pwiki.wiki import Wiki
 from re import compile,findall
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from time import localtime,strftime
 
-chrome_options = Options()
-for option in ["--headless","--disable-gpu","--window-size=1920,1200","--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage"]:
-    chrome_options.add_argument(option)
-chrome = webdriver.Chrome("/usr/local/share/chrome_driver",options = chrome_options)
+chrome = webdriver.Chrome("/usr/local/share/chrome_driver")
 
 chrome.get("https://voyager.jpl.nasa.gov/mission/status/")
 page_source = chrome.page_source
