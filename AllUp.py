@@ -11,7 +11,6 @@ from time import localtime,strftime
 chrome_options = Options()
 for option in ["--headless","--disable-gpu","--window-size=1920,1200","--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage"]:
     chrome_options.add_argument(option)
-chrome_options.binary_location = "/usr/bin/google-chrome"
 chrome = webdriver.Chrome("/usr/local/share/chrome_driver",options = chrome_options)
 
 chrome.get("https://voyager.jpl.nasa.gov/mission/status/")
