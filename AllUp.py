@@ -28,7 +28,7 @@ for id in [1,2]:
         cnt += 1
         data_re = compile(f'id="voy{id}_{section}">(.*)</div>')
         findall_res = findall(data_re,page_source)
-        AllUp_content = AllUp_content.replace(f"data{cnt} ",f"{findall_res[0]} ")
+        AllUp_content = AllUp_content.replace(f"data{cnt}",f"{findall_res[0]}")
 
 wiki = Wiki("sat.huijiwiki.com","雨伞CKY",environ["SATWIKI_PASSWORD"])
 wiki.edit("模板:AllUp",AllUp_content,"Edit via AllUp-Satwiki")
