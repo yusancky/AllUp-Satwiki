@@ -7,7 +7,9 @@ from re import compile,findall
 from selenium import webdriver
 from time import localtime,strftime
 
-chrome = webdriver.Chrome("/usr/local/share/chrome_driver")
+chrome_options = webdriver.ChromeOptions()
+chrome_options.headless = True
+chrome = webdriver.Chrome("/usr/local/share/chrome_driver",options = chrome_options)
 
 chrome.get("https://voyager.jpl.nasa.gov/mission/status/")
 page_source = chrome.page_source
