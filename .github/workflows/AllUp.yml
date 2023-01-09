@@ -2,8 +2,11 @@ name: AllUp
 
 on:
   schedule:
-    - cron:  '9 1 9 * *'
+    - cron: '26 1 * * *'
   workflow_dispatch:
+
+env:
+  TZ: Asia/Shanghai
 
 jobs:
   AllUp:
