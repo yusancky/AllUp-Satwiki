@@ -35,6 +35,6 @@ for id in [1,2]:
 
 print(f'Content: {AllUp_content}')
 
-if environ['GITHUB_REF'] == 'refs/heads/main' and GITHUB_REPOSITORY_OWNER == 'yusancky':
+if environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky':
     wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['SATWIKI_PASSWORD'])
     wiki.edit('模板:AllUp',AllUp_content,'Edit via AllUp-Satwiki')
