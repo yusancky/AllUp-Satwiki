@@ -4,6 +4,7 @@
 from os import environ
 from pwiki.wiki import Wiki
 from re import compile,findall
+from requests import get
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -12,7 +13,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import read_version_from_cmd,ChromeType,PATTERN
 
 chrome_version = read_version_from_cmd('google-chrome --version',PATTERN[ChromeType.GOOGLE])
-chrome_service = Service(ChromeDriverManager(chrome_type = ChromeType.GOOGLE,version = chrome_version).install())
+response = get(f'https://chromedriver.storage.googleapis.com/LATEST_RELEASE_{chrome_version}')
+chrome_service = Service(ChromeDriverManager(chrome_type = ChromeType.GOOGLE,version = response.text).install())
 chrome_options = Options()
 for option in ['--headless','--disable-gpu','--window-size=1920,1200','--ignore-certificate-errors','--disable-extensions','--no-sandbox','--disable-dev-shm-usage']:
     chrome_options.add_argument(option)
