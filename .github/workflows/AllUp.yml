@@ -7,14 +7,10 @@ on:
 
 jobs:
   AllUp:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - run: apt list --installed
-      - run: sudo apt purge google-chrome-stable
-      - run: sudo apt purge chromium-browser
-      - run: sudo apt install chromium-browser -y
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -25,4 +21,6 @@ jobs:
       - name: AllUp
         run: python AllUp.py
         env:
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
