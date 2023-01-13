@@ -1,8 +1,7 @@
 # Copyright (c) yusancky. All rights reserved. 
 # Licensed under the Apache License 2.0. See License in the project root for license information. 
 
-from os import environ
-from pwiki.wiki import Wiki
+from os import system
 from re import compile,findall
 from requests import get
 from selenium import webdriver
@@ -33,8 +32,6 @@ for id in [1,2]:
         findall_res = findall(data_re,page_source)
         AllUp_content = AllUp_content.replace(f'data{cnt} ',f'{findall_res[0]}')
 
-print(f'Content: {AllUp_content}')
+system(f'echo "ALLUP_CONTENT={AllUp_content}" >> $GITHUB_OUTPUT')
 
-if environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky':
-    wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['SATWIKI_PASSWORD'])
-    wiki.edit('模板:AllUp',AllUp_content,'Edit via AllUp-Satwiki')
+print(f'==== AllUp_Content ====\n{AllUp_content}')

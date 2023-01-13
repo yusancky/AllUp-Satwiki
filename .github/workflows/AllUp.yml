@@ -21,9 +21,13 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: AllUp
-        run: python AllUp.py
+      - name: Fetch & Make
+        id: fetch_make
+        run: python fetch_make.py
+      - name: Edit
+        id: edit
+        if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'yusancky' }}
+        run: python edit.py
         env:
-          GITHUB_REF: ${{ github.ref }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          ALLUP_CONTENT: ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
