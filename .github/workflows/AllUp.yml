@@ -1,6 +1,7 @@
 name: AllUp
 
 on:
+  pull_request:
   schedule:
     - cron: '26 1 * * *'
   workflow_dispatch:
@@ -13,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4.5.0
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -31,3 +32,18 @@ jobs:
         env:
           ALLUP_CONTENT: ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
+      - name: Preview on Pull Request
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v2.3.0
+        with:
+          message: |
+            # 预览
+
+            ```go
+            ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
+            ```
+
+            > **Note**
+            > 上方的 wikitext 代码块因展示高亮便利而使用 Go 语言高亮器，敬请理解。
+          reactions: eyes
+          comment_tag: actions-wikitext-preview
