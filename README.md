@@ -13,8 +13,6 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 
 下载仓库根目录下的 `fetch_make.py`，并在安装所有依赖（可在下载根目录下的 `requirements.txt` 后使用 `pip install -r requirements.txt` 批量安装）后运行 Python 代码。
 
-# 脚注
-
 [^1]: 时间为北京时间。
 
 [^2]: 定时修改基于 GitHub Action 的 `schedule` 事件。但 `schedule` 事件在 Actions 工作流运行期间负载过高时可能会延迟。据以往经历，一般延迟在 75 分钟左右。
