@@ -14,6 +14,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 下载存储库根目录下的 `fetch_make.py`，并在安装所有依赖后运行 Python 代码。
 
 > **Note**
+> 
 > 在下载根目录下的 `requirements.txt` 后，可以运行 `pip install -r requirements.txt` 安装依赖。
 
 # 贡献
@@ -21,6 +22,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 感谢您能抽出宝贵时间为 AllUp-Satwiki 项目做出贡献！
 
 > **Note**
+> 
 > AllUp-Satwiki 项目是业余项目，对任何非恶意的贡献友好。
 
 此外，欢迎您对存储库已有内容或其他拉取请求提供建议，但请使用客观友好的方式发表评论，而不是打击贡献者的消极负面评论。如果您想加入开发团队，请联系雨伞CKY。
@@ -30,6 +32,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 下文将假定您较少了解 GitHub，如果您了解 GitHub 并已有帐户，可跳过本节，开始阅读 [格式手册](#格式手册)。
 
 > **Note**
+> 
 > 您不必担心您的操作造成意外的错误，因为您的修改只在被检查并合并到主存储库后才影响模板的内容。
 
 ### GitHub 帐户
@@ -37,6 +40,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 如果您需要参与贡献，需要一个 GitHub 个人帐户。如果您还没有帐户，可以前往 [GitHub 的注册页](https://github.com/signup) 注册。
 
 > **Note**
+> 
 > 注册后，您可能还需要 [验证电子邮件地址](https://docs.github.com/zh/get-started/signing-up-for-github/verifying-your-email-address)。
 
 ### 创建存储库分支
@@ -52,6 +56,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 ### 在存储库内修改
 
 > **Note**
+> 
 > 如果您熟悉 Git 的操作，也可以使用 Git 和本地编辑器，但在这里不加赘述。
 
 1. 打开需要修改的文件，点击「编辑文件」按钮（如下图一）。如果需要编辑多个文件，或需要修改较多内容，可以选择在 github.dev 中编辑（如下图二）。
@@ -102,6 +107,6 @@ Markdown 内容标准基本与 [Copywriting - 中文文案排版指北（简体�
 
 [^1]: 时间为北京时间。
 
-[^2]: 定时修改基于 GitHub Action 的 `schedule` 事件。但 `schedule` 事件在 Actions 工作流运行期间负载过高时可能会延迟。据以往经历，一般延迟在 $75$ 分钟左右。
+[^2]: 定时修改基于 GitHub Action 的 `schedule` 事件。但 `schedule` 事件在 Actions 工作流运行期间负载过高时可能会延迟。据以往经历，一般延迟在 75 分钟左右。
 
-[^3]: 对于数字，请尽量使用 $\TeX$ 公式。对于「争议」部分，要求链接之间增加空格、简体中文使用直角引号。特别地，数字与单位间是否需要空格，在阿拉伯数字与计量单位字母符号间应插入一个空格（例：$1 m$、$100 kg$）。
+[^3]: 对于数字，请尽量使用 TeX 公式。对于「争议」部分，要求链接之间增加空格、简体中文使用直角引号。特别地，数字与单位间是否需要空格，在阿拉伯数字与计量单位字母符号间应插入一个空格（例：1 m、100 kg）。
