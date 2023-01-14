@@ -54,6 +54,6 @@ def make(id):
 
 if __name__ == '__main__':
     configure_chromedriver()
-    AllUp_content = '<includeonly>{{{{#switch:{{{{{{1|}}}|t={make('t')}|1={make(1)}|2={make(2)}|#default={make('default')}}}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}</noinclude>    
+    AllUp_content = f"<includeonly>{{{{#switch:{{{{{{1|}}}|t={make('t')}|1={make(1)}|2={make(2)}|#default={make('default')}}}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}</noinclude>"
     system(f'echo "ALLUP_CONTENT={AllUp_content}" >> $GITHUB_OUTPUT')
     print(f'==== AllUp_Content ====\n{AllUp_content}')
