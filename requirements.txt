@@ -1,3 +1,3 @@
 pwiki==1.2.0
 selenium==4.7.2
-https://github.com/yusancky/webdriver_manager/archive/refs/heads/issue-386.zip
+git+https://github.com/yusancky/webdriver_manager.git@issue-386
