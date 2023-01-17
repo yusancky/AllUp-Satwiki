@@ -8,11 +8,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from time import localtime,strftime
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import read_version_from_cmd,ChromeType,PATTERN
 
 def configure_chromedriver():
-    chrome_service = Service(ChromeDriverManager(chrome_type = ChromeType.GOOGLE,version = read_version_from_cmd('google-chrome --version',PATTERN[ChromeType.GOOGLE]),get_version = True).install())
+    chrome_service = Service('/usr/local/share/chrome_driver/chromedriver')
     chrome_options = Options()
     for option in ['--headless','--disable-gpu','--window-size=1920,1200','--ignore-certificate-errors','--disable-extensions','--no-sandbox','--disable-dev-shm-usage']:
         chrome_options.add_argument(option)

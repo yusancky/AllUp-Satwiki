@@ -48,13 +48,9 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.3.1
         with:
           message: |
-            # 预览
+            ## 预览
 
             ```go
             ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
             ```
-
-            > **Note**
-            > 上方的 wikitext 代码块因展示高亮便利而使用 Go 语言高亮器，敬请理解。
-          reactions: eyes
           comment_tag: actions-wikitext-preview
