@@ -48,7 +48,7 @@ def make(id):
             data = {}
             for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
                 data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>',web_data)[0].strip()
-            return f"{{{{#switch:{{{{{{section|}}}}}}|Inclination={data['Inclination']}|Eccentricity={data['Eccentricity']}|RA ascending node={data['RA ascending node']}|Argument perihelion={data['Argument']}|Mean anomaly={data['Mean anomaly']}|Orbital Period={data['Orbital Period']}|Epoch of osculation={data['Epoch of osculation']}|#default=请输入正确的选项名！}}}}"
+            return f"{{{{#switch:{{{{{{section|}}}}}}|Inclination={data['Inclination']}|Eccentricity={data['Eccentricity']}|RA ascending node={data['RA ascending node']}|Argument perihelion={data['Argument perihelion']}|Mean anomaly={data['Mean anomaly']}|Orbital Period={data['Orbital Period']}|Epoch of osculation={data['Epoch of osculation']}|#default=请输入正确的选项名！}}}}"
         case _:
             return '请输入正确的AllUp编号！'
 
