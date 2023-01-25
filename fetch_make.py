@@ -44,7 +44,11 @@ def make(id):
                     )[0]
             return f"{{{{#switch:{{{{{{id|}}}}}}|1={{{{#switch:{{{{{{section|}}}}}}|km={data[1]['km']}|au={data[1]['au']}|kms={data[1]['kms']}|aus={data[1]['aus']}|speed={data[1]['speed']}|lt={data[1]['lt']}|#default=请输入正确的选项名！}}}}|2={{{{#switch:{{{{{{section|}}}}}}|km={data[2]['km']}|au={data[2]['au']}|kms={data[2]['kms']}|aus={data[2]['aus']}|speed={data[2]['speed']}|lt={data[2]['lt']}|#default=请输入正确的选项名！}}}}|#default=请输入正确的编号！}}}}"
         case 2:
-            return '敬请期待！'
+            web_data = fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
+            data = {}
+            for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
+                data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>',web_data)[0].strip()
+            return f"{{{{#switch:{{{{{{section|}}}}}}|Inclination={data['Inclination']}|Eccentricity={data['Eccentricity']}|RA ascending node={data['RA ascending node']}|Argument perihelion={data['Argument perihelion']}|Mean anomaly={data['Mean anomaly']}|Orbital period={data['Orbital period']}|Epoch of osculation={data['Epoch of osculation']}|#default=请输入正确的选项名！}}}}"
         case _:
             return '请输入正确的AllUp编号！'
 
