@@ -36,6 +36,7 @@ def generate_switch(data_map):
             result += f'|{data_key}={generate_switch(data_value)}'
         else:
             raise TypeError(f"an integer or a dictionary is required, not '{type(data_value)}'")
+    result += '}}'
     return result
 
 def make(id):
