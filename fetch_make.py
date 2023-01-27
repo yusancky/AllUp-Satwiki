@@ -43,7 +43,7 @@ def make(id):
     match id:
         case 't':
             return strftime('%Y年%m月%d日%H时',localtime())
-        case 1:
+        case '1':
             web_data = fetch_data(
                 'https://voyager.jpl.nasa.gov/mission/status/',
                 True
@@ -59,7 +59,7 @@ def make(id):
                 data[id]['#default'] = '请输入正确的选项名！'
             data['#default'] = '请输入正确的编号！'
             return generate_switch(data)
-        case 2:
+        case '2':
             web_data = fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
             data = {'switch_key': 'section'}
             for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
