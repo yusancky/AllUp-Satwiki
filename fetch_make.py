@@ -35,7 +35,7 @@ def generate_switch(data_map):
         elif isinstance(data_value,dict):
             result += f'|{data_key}={generate_switch(data_value)}'
         else:
-            raise TypeError(f"an integer or a dictionary is required, not '{type(data_value)}'")
+            raise TypeError(f"a string or a dictionary is required, not '{type(data_value)}'")
     result += '}}'
     return result
 
@@ -48,11 +48,9 @@ def make(id):
                 'https://voyager.jpl.nasa.gov/mission/status/',
                 True
             )
-            data = {}
-            data['switch_key'] = 'id'
+            data = {'switch_key': 'id'}
             for id in [str(i + 1) for i in range(2)]:
-                data[id] = {}
-                data[id]['switch_key'] = 'section'
+                data[id] = {'switch_key': 'section'}
                 for section in ['km','au','kms','aus','speed','lt']:
                     data[id][section] = findall(
                         compile(f'id="voy{id}_{section}">(.*)</div>'),
@@ -63,8 +61,7 @@ def make(id):
             return generate_switch(data)
         case 2:
             web_data = fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
-            data = {}
-            data['switch_key'] = 'section'
+            data = {'switch_key': 'section'}
             for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
                 data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>',web_data)[0].strip()
             data['#default'] = '请输入正确的选项名！'
@@ -74,6 +71,9 @@ def make(id):
 
 if __name__ == '__main__':
     configure_chromedriver()
-    AllUp_content = f"<includeonly>{{{{#switch:{{{{{{1|}}}}}}|t={make('t')}|1={make(1)}|2={make(2)}|#default={make('default')}}}}}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>"
+    AllUp_data = {'switch_key': '1'}
+    for dataset in ['t'] + [str(i + 1) for i in range(2)] + ['#default']:
+        AllUp_data[dataset] = make(dataset)
+    AllUp_content = f"<includeonly>{generate_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>"
     system(f'echo "ALLUP_CONTENT={AllUp_content}" >> $GITHUB_OUTPUT')
     print(f'==== AllUp_Content ====\n{AllUp_content}')
