@@ -4,6 +4,8 @@
 
 AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动化爬取并集合数据以便动态更新的项目。AllUp 项目的数据将于每日 $9$ 时 $26$ 分爬取数据并修改。[^1][^2]
 
+![Contributions in the Last 30 Days](https://repobeats.axiom.co/api/embed/3c013245586cfcc386dd553450db134d7617991c.svg)
+
 # 使用
 
 ## 在本地使用
