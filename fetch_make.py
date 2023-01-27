@@ -25,6 +25,19 @@ def fetch_data(url,need_selenium = False):
         response = get(url)
         return response.text
 
+def generate_switch(data_map):
+    result = '{{#switch:{{{' + data_map['switch_key'] + '|}}}'
+    for data_key,data_value in data_map.items():
+        if data_key == 'switch_key':
+            continue
+        if isinstance(data_value,str):
+            result += f'|{data_key}={data_value}'
+        elif isinstance(data_value,dict):
+            result += f'|{data_key}={generate_switch(data_value)}'
+        else:
+            raise TypeError(f"an integer or a dictionary is required, not '{type(data_value)}'")
+    return result
+
 def make(id):
     match id:
         case 't':
@@ -35,20 +48,26 @@ def make(id):
                 True
             )
             data = {}
-            for id in [1,2]:
+            data['switch_key'] = 'id'
+            for id in [str(i + 1) for i in range(2)]:
                 data[id] = {}
+                data[id]['switch_key'] = 'section'
                 for section in ['km','au','kms','aus','speed','lt']:
                     data[id][section] = findall(
                         compile(f'id="voy{id}_{section}">(.*)</div>'),
                         web_data
                     )[0]
-            return f"{{{{#switch:{{{{{{id|}}}}}}|1={{{{#switch:{{{{{{section|}}}}}}|km={data[1]['km']}|au={data[1]['au']}|kms={data[1]['kms']}|aus={data[1]['aus']}|speed={data[1]['speed']}|lt={data[1]['lt']}|#default=请输入正确的选项名！}}}}|2={{{{#switch:{{{{{{section|}}}}}}|km={data[2]['km']}|au={data[2]['au']}|kms={data[2]['kms']}|aus={data[2]['aus']}|speed={data[2]['speed']}|lt={data[2]['lt']}|#default=请输入正确的选项名！}}}}|#default=请输入正确的编号！}}}}"
+                data[id]['#default'] = '请输入正确的选项名！'
+            data['#default'] = '请输入正确的编号！'
+            return generate_switch(data)
         case 2:
             web_data = fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
             data = {}
+            data['switch_key'] = 'section'
             for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
                 data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>',web_data)[0].strip()
-            return f"{{{{#switch:{{{{{{section|}}}}}}|Inclination={data['Inclination']}|Eccentricity={data['Eccentricity']}|RA ascending node={data['RA ascending node']}|Argument perihelion={data['Argument perihelion']}|Mean anomaly={data['Mean anomaly']}|Orbital period={data['Orbital period']}|Epoch of osculation={data['Epoch of osculation']}|#default=请输入正确的选项名！}}}}"
+            data['#default'] = '请输入正确的选项名！'
+            return generate_switch(data)
         case _:
             return '请输入正确的AllUp编号！'
 
