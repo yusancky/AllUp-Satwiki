@@ -33,15 +33,15 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: Fetch & Make
-        id: fetch_make
-        run: python fetch_make.py
+      - name: Generate wikitext
+        id: generate
+        run: python generate.py
       - name: Edit
         id: edit
         if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'yusancky' }}
         run: python edit.py
         env:
-          ALLUP_CONTENT: ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
+          ALLUP_CONTENT: ${{ steps.generate.outputs.ALLUP_CONTENT }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
@@ -51,6 +51,6 @@ jobs:
             ## 预览
 
             ```go
-            ${{ steps.fetch_make.outputs.ALLUP_CONTENT }}
+            ${{ steps.generate.outputs.ALLUP_CONTENT }}
             ```
           comment_tag: actions-wikitext-preview
