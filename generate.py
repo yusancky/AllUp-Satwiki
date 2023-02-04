@@ -1,8 +1,8 @@
 # Copyright (c) yusancky. All rights reserved. 
 # Licensed under the Apache License 2.0. See License in the project root for license information. 
 
-import AllUp-utils.web
-import AllUp-utils.wikitext
+import AllUp_utils.web
+import AllUp_utils.wikitext
 from os import system
 from re import compile,findall
 from time import localtime,strftime
