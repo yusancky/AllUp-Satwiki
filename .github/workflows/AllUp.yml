@@ -1,15 +1,12 @@
 name: AllUp
 
 on:
+  push:
   pull_request:
     types:
       - opened
       - synchronize
       - reopened
-    paths:
-      - '**.py'
-      - '**.txt'
-      - '**.yml'
   schedule:
     - cron: '26 1 * * *'
   workflow_dispatch:
