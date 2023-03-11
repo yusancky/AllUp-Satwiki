@@ -8,17 +8,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 
 # 使用
 
-## 在本地使用
-
-下载存储库根目录下的 `generate.py`，并在安装所有依赖后运行 Python 代码。
-
-> **Note**
-> 
-> 在下载根目录下的 `requirements.txt` 后，可以运行 `pip install -r requirements.txt` 安装依赖。
-
-## 在 GitHub Actions 工作流中使用
-
-在设置存储库机密后，即可运行工作流。
+克隆或下载本存储库后，（切换到本项目根目录后）使用 `pip install -r requirements.txt` 安装所有依赖，并运行 `generate.py` 即可生成模板内容。
 
 # 贡献
 
