@@ -46,7 +46,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.3.1
         with:
           message: |
-            [Preview] After _current_ modification of the PR, the program generates the content as shown below: 
+            **[Preview]** After _current_ modification of the PR, the program generates the content as shown below: 
             ```go
             ${{ steps.generate.outputs.ALLUP_CONTENT }}
             ```
