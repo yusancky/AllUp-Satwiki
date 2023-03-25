@@ -2,6 +2,7 @@ name: AllUp
 
 on:
   push:
+    branches: [main]
   pull_request:
     types:
       - opened
@@ -45,9 +46,10 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.3.1
         with:
           message: |
-            ## 预览
-
+            **[Preview]** After _current_ modification of the PR, the program generates the content as shown below: 
             ```go
             ${{ steps.generate.outputs.ALLUP_CONTENT }}
             ```
+            
+            The content won't be uploaded to Satwiki before the PR is merged. 
           comment_tag: actions-wikitext-preview
