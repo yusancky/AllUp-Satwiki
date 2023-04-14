@@ -31,24 +31,23 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: Generate wikitext
-        id: generate
-        run: python generate.py
-      - name: Edit
-        id: edit
+      - name: Build
+        id: build
+        run: python build.py
+      - name: Push
         if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'yusancky' }}
-        run: python edit.py
+        run: python push.py
         env:
-          ALLUP_CONTENT: ${{ steps.generate.outputs.ALLUP_CONTENT }}
+          ALLUP_CONTENT: ${{ steps.build.outputs.ALLUP_CONTENT }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2.3.1
         with:
           message: |
-            **[Preview]** After _current_ modification of the PR, the program generates the content as shown below: 
+            **[Preview]** After _current_ modification of the PR, the program builds the content as shown below: 
             ```go
-            ${{ steps.generate.outputs.ALLUP_CONTENT }}
+            ${{ steps.build.outputs.ALLUP_CONTENT }}
             ```
             
             The content won't be uploaded to Satwiki before the PR is merged. 

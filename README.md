@@ -8,7 +8,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 
 # 使用
 
-克隆或下载本存储库后，（切换到本项目根目录后）使用 `pip install -r requirements.txt` 安装所有依赖，并运行 `generate.py` 即可生成模板内容。
+克隆或下载本存储库后，（切换到本项目根目录后）使用 `pip install -r requirements.txt` 安装所有依赖，并运行 `build.py` 即可生成模板内容。
 
 # 贡献
 
