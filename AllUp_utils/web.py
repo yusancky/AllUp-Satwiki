@@ -4,14 +4,12 @@
 from requests import get
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 
 def configure_chromedriver():
-    chrome_service = Service('/usr/local/share/chrome_driver/chromedriver')
     chrome_options = Options()
     for option in ['--headless','--disable-gpu','--window-size=1920,1200','--ignore-certificate-errors','--disable-extensions','--no-sandbox','--disable-dev-shm-usage']:
         chrome_options.add_argument(option)
-    return webdriver.Chrome(service = chrome_service,options = chrome_options)
+    return webdriver.Chrome(options = chrome_options)
 
 def fetch_data(url,need_selenium = False):
     if need_selenium:
