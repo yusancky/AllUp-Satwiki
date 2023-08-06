@@ -42,7 +42,7 @@ jobs:
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
-        uses: thollander/actions-comment-pull-request@v2.4.0
+        uses: thollander/actions-comment-pull-request@v2.4.2
         with:
           message: |
             **[Preview]** After _current_ modification of the PR, the program builds the content as shown below: 
