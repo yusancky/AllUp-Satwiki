@@ -4,14 +4,12 @@
 import AllUp_utils.push
 import csv
 from datetime import date
-from os import environ
-from pwiki.wiki import Wiki
 
 missions = []
 
 today = date.today()
 
-with open('./TSS/data.csv',encoding='utf-8',newline = '') as csvfile:
+with open('./TSS-data.csv',encoding='utf-8',newline = '') as csvfile:
     spamreader = csv.DictReader(csvfile)
     for row in spamreader:
         start_date = date.fromisoformat(row['发射时间'])
