@@ -5,12 +5,11 @@ from os import environ
 from pwiki.wiki import Wiki
 
 def push(title : str,content_id : str,content : str):
+    print(
+        f'### {content_id}\n\n```go\n{content}\n```\n\n',
+        file = open('../PR_preview.md','a')
+    )
     try:
-        print(
-            f'### {content_id}\n\n```go\n{content}\n```\n\n',
-            file = open('../PR_preview.md','a')
-        )
-        system(f'echo "{content_id}_CONTENT={content}" >> $GITHUB_OUTPUT')
         if environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky':
             wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['SATWIKI_PASSWORD'])
             wiki.edit(title,content,'Edit via AllUp-Satwiki')
