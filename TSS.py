@@ -27,7 +27,7 @@ data_name,start_date,delta_days_with_data_color = [],[],''
 for mission in missions:
     data_name.insert(0,mission[0])
     start_date.insert(0,(mission[1] - date.fromisoformat('20210429')).days)
-    delta_days_with_data_color = f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},' + delta_days_with_data_color
+    delta_days_with_data_color = f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},{delta_days_with_data_color}'
 
 delta_days_with_data_color = delta_days_with_data_color[:-1]
 
