@@ -9,7 +9,7 @@ missions = []
 
 today = date.today()
 
-with open('./TSS-data.csv',encoding='utf-8',newline = '') as csvfile:
+with open('TSS-data.csv',encoding='utf-8',newline = '') as csvfile:
     spamreader = csv.DictReader(csvfile)
     for row in spamreader:
         start_date = date.fromisoformat(row['发射时间'])
