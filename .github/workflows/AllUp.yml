@@ -40,7 +40,7 @@ jobs:
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: Main for TSS
         id: tss_main
-        run: python tss/main.py
+        run: python TSS/main.py
         env:
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
