@@ -49,18 +49,5 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2.4.2
         with:
-          message: |
-            **[Preview]**
-            
-            After _current_ modification of the PR, the program builds the main content as shown below: 
-            ```go
-            ${{ steps.build.outputs.MAIN_CONTENT }}
-            ```
-
-            After _current_ modification of the PR, the program builds the TSS content as shown below: 
-            ```go
-            ${{ steps.build.outputs.TSS_CONTENT }}
-            ```
-            
-            The content won't be uploaded to Satwiki before the PR is merged. 
+          filePath: PR_preview.md
           comment_tag: actions-wikitext-preview
