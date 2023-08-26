@@ -31,23 +31,35 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: Build
-        id: build
-        run: python build.py
-      - name: Push
-        if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'yusancky' }}
-        run: python push.py
+      - name: Main
+        id: main
+        run: python main.py
         env:
-          ALLUP_CONTENT: ${{ steps.build.outputs.ALLUP_CONTENT }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
+      - name: Main for TSS
+        id: tss_main
+        run: python tss/main.py
+        env:
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2.4.2
         with:
           message: |
-            **[Preview]** After _current_ modification of the PR, the program builds the content as shown below: 
+            **[Preview]**
+            
+            After _current_ modification of the PR, the program builds the main content as shown below: 
             ```go
-            ${{ steps.build.outputs.ALLUP_CONTENT }}
+            ${{ steps.build.outputs.MAIN_CONTENT }}
+            ```
+
+            After _current_ modification of the PR, the program builds the TSS content as shown below: 
+            ```go
+            ${{ steps.build.outputs.TSS_CONTENT }}
             ```
             
             The content won't be uploaded to Satwiki before the PR is merged. 

@@ -1,6 +1,6 @@
 # AllUp-Satwiki
 
-![Python: 3.10 | 3.11 | 3.12](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-python?style=social&logo=python&logoColor=blue) ![License: Apache-2.0](https://img.shields.io/github/license/yusancky/AllUp-Satwiki?style=social)
+![Python: 3.11 | 3.12](https://img.shields.io/badge/Python-3.11%20%7C%203.12-python?style=social&logo=python&logoColor=blue) ![License: Apache-2.0](https://img.shields.io/github/license/yusancky/AllUp-Satwiki?style=social)
 
 AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动化爬取并集合数据以便动态更新的项目。AllUp 项目的数据将于每日北京时间 9 时 26 分爬取数据并修改。[^1]
 
@@ -8,7 +8,7 @@ AllUp 项目是由 [雨伞CKY](https://github.com/yusancky) 维护的、自动�
 
 # 使用
 
-克隆或下载本存储库后，（切换到本项目根目录后）使用 `pip install -r requirements.txt` 安装所有依赖，并运行 `build.py` 即可生成模板内容。
+克隆或下载本存储库后，（切换到本项目根目录后）使用 `pip install -r requirements.txt` 安装所有依赖。之后，你可以分别通过运行 `main.py` 和 `TSS/main.py` 生成主模板内容、天宫空间站任务列表的 Apache ECharts 模板内容。生成的内容不会主动输出。
 
 # 贡献
 
