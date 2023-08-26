@@ -11,7 +11,7 @@ def configure_chromedriver():
         chrome_options.add_argument(option)
     return webdriver.Chrome(options = chrome_options)
 
-def fetch_data(url,need_selenium = False):
+def fetch_data(url : str,need_selenium = False):
     if need_selenium:
         need_selenium.get(url)
         return need_selenium.page_source
