@@ -30,7 +30,7 @@ def make(id):
         case '2':
             web_data = AllUp_utils.web.fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
             data = {'switch_key': 'section'}
-            for section in ['Inclination','Eccentricity','RA ascending node','Argument perihelion','Mean anomaly','Orbital period','Epoch of osculation']:
+            for section in ['Inclination','Eccentricity','RA ascending node','Argument perigee','Mean anomaly','Orbital period','Epoch of osculation']:
                 data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>',web_data)[0].strip()
             data['#default'] = '请输入正确的选项名！'
             return AllUp_utils.wikitext.build_switch(data)
