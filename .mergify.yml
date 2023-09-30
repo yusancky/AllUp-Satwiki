@@ -1,0 +1,17 @@
+pull_request_rules:
+  - name: Automatic merge
+    conditions:
+      - 'base=main'
+      - 'check-success=AllUp'
+      - or:
+        - 'author=aoeer39'
+        - 'author=dependabot[bot]'
+        - 'author=yusancky'
+        - 'label=mergeit'
+      - 'label!=help wanted'
+      - 'label!=invalid'
+      - 'label!=question'
+      - 'label!=wontfix'
+    actions:
+      merge:
+        method: squash
