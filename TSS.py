@@ -9,7 +9,7 @@ missions = []
 today = date.today()
 
 dataset = AllUp_utils.wiki.pull('模板:天宫空间站任务列表/echarts/data')
-for row in dataset:
+for row in dataset.split('\n'):
     data = eval(row)
     start_date = date.fromisoformat(data[2])
     end_date = date.fromisoformat(data[3]) if data[3] != 'future' else date.today()
