@@ -1,7 +1,7 @@
 # Copyright (c) yusancky. All rights reserved. 
 # Licensed under the Apache License 2.0. See License in the project root for license information. 
 
-import AllUp_utils.push
+import AllUp_utils.wiki
 import csv
 from datetime import date
 
@@ -9,18 +9,18 @@ missions = []
 
 today = date.today()
 
-with open('TSS-data.csv',encoding = 'utf-8',newline = '') as csvfile:
-    spamreader = csv.DictReader(csvfile)
-    for row in spamreader:
-        start_date = date.fromisoformat(row['发射时间'])
-        end_date = date.fromisoformat(row['再入时间']) if row['再入时间'] != 'future' else date.today()
-        delta_days = (end_date - start_date).days
-        missions.append([
-            row['中文名称'],
-            start_date,
-            delta_days,
-            '#fdba74' if row['类型'] == 'main' else ('#6ee7b7' if row['再入时间'] != 'future' else '#fcd34d')
-        ])
+csvdata = AllUp_utils.wiki.pull('模板:天宫空间站任务列表/echarts/data')
+spamreader = csv.DictReader(csvdata.splitlines())
+for row in spamreader:
+    start_date = date.fromisoformat(row['发射时间'])
+    end_date = date.fromisoformat(row['再入时间']) if row['再入时间'] != 'future' else date.today()
+    delta_days = (end_date - start_date).days
+    missions.append([
+        row['中文名称'],
+        start_date,
+        delta_days,
+        '#fdba74' if row['类型'] == 'main' else ('#6ee7b7' if row['再入时间'] != 'future' else '#fcd34d')
+    ])
 
 data_name,start_date,delta_days_with_data_color = [],[],''
 
@@ -91,4 +91,4 @@ output_content = f'''{{{{#echarts:option={{
 }}
 |style=min-height:380px}}}}'''
 
-AllUp_utils.push.push('模板:天宫空间站任务列表/echarts','TSS',output_content)
+AllUp_utils.wiki.push('模板:天宫空间站任务列表/echarts','TSS',output_content)
