@@ -3,11 +3,13 @@ pull_request_rules:
     conditions:
       - 'base=main'
       - 'check-success=AllUp'
+      - 'check-success=CodeQL'
+      - 'label=mergeit'
       - or:
+        - 'approved-reviews-by=yusancky'
         - 'author=aoeer39'
         - 'author=dependabot[bot]'
         - 'author=yusancky'
-        - 'label=mergeit'
       - 'label!=help wanted'
       - 'label!=invalid'
       - 'label!=question'
