@@ -21,7 +21,7 @@ def make(id):
                 data[id] = {'switch_key': 'section'}
                 for section in ['km','au','kms','aus','speed','lt']:
                     data[id][section] = findall(
-                        compile(f'id='voy{id}_{section}'>(.*)</div>'),
+                        compile(f'id="voy{id}_{section}">(.*)</div>'),
                         web_data
                     )[0]
                 data[id]['#default'] = '请输入正确的选项名！'
