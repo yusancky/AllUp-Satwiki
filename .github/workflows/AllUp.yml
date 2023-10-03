@@ -27,7 +27,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4.7.0
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
@@ -37,7 +37,7 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
-      - name: Main for TSS
+      - name: TSS
         run: python TSS.py
         env:
           GITHUB_REF: ${{ github.ref }}
