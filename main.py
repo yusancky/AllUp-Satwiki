@@ -21,7 +21,7 @@ def make(id):
                 data[id] = {'switch_key': 'section'}
                 for section in ['km','au','kms','aus','speed','lt']:
                     data[id][section] = findall(
-                        compile(f'id="voy{id}_{section}">(.*)</div>'),
+                        compile(f'id='voy{id}_{section}'>(.*)</div>'),
                         web_data
                     )[0]
                 data[id]['#default'] = '请输入正确的选项名！'
@@ -42,5 +42,5 @@ if __name__ == '__main__':
     AllUp_data = {'switch_key': '1'}
     for dataset in ['t'] + [str(i + 1) for i in range(2)] + ['#default']:
         AllUp_data[dataset] = make(dataset)
-    AllUp_content = f"<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>"
+    AllUp_content = f'<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>'
     AllUp_utils.wiki.push('模板:AllUp','MAIN',AllUp_content)

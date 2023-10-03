@@ -11,6 +11,6 @@ def build_switch(data_map):
         elif isinstance(data_value,dict):
             result += f'|{data_key}={build_switch(data_value)}'
         else:
-            raise TypeError(f"A string or a dictionary is required, not '{type(data_value)}'.")
+            raise TypeError(f'A string or a dictionary is required, not '{type(data_value)}'.')
     result += '}}'
     return result

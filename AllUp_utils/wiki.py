@@ -14,7 +14,7 @@ def pull(title : str):
                 wiki = Wiki('sat.huijiwiki.com')
                 return wiki.page_text(title)
             except:
-                print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
+                print(f'You do not have permission to get password.\nREF: {environ['GITHUB_REF']}\nREPO_OWNER: {environ['GITHUB_REPOSITORY_OWNER']}')
     except:
         pass
 
@@ -28,6 +28,6 @@ def push(title : str,content_id : str,content : str):
             wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['SATWIKI_PASSWORD'])
             wiki.edit(title,content,'Edit via AllUp-Satwiki')
         else:
-            print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
+            print(f'You do not have permission to get password.\nREF: {environ['GITHUB_REF']}\nREPO_OWNER: {environ['GITHUB_REPOSITORY_OWNER']}')
     except:
         pass
