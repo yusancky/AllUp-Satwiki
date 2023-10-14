@@ -32,12 +32,14 @@ jobs:
       - name: Main
         run: python main.py
         env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - name: TSS
         run: python TSS.py
         env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}

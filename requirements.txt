@@ -1,2 +1,2 @@
 pwiki==1.2.0
-selenium==4.13.0
+selenium==4.14.0
