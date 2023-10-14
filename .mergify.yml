@@ -3,7 +3,6 @@ pull_request_rules:
     conditions:
       - 'base=main'
       - 'check-success=AllUp'
-      - 'check-success=CodeQL'
       - 'label=mergeit'
       - or:
         - 'approved-reviews-by=yusancky'
