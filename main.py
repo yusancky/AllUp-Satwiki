@@ -41,7 +41,7 @@ def make(id):
             print(dataset)
             for section in range(4):
                 print(f'{section} {dataset[section]}')
-                data[str(section + 1)] = dataset[section]
+                data[str(section + 1)] = dataset[0][section]
             data['#default'] = '请输入正确的选项名！'
             return AllUp_utils.wikitext.build_switch(data)
         case _:
