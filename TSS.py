@@ -90,4 +90,4 @@ output_content = f'''{{{{#echarts:option={{
 }}
 |style=min-height:380px}}}}'''
 
-AllUp_utils.wiki.push('模板:天宫空间站任务列表/echarts','TSS',output_content)
+AllUp_utils.wiki.push('天宫空间站任务列表Echarts','TSS',output_content)
