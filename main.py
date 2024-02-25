@@ -51,4 +51,4 @@ if __name__ == '__main__':
     for dataset in ['t'] + [str(i + 1) for i in range(3)] + ['#default']:
         AllUp_data[dataset] = make(dataset)
     AllUp_content = f'<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>'
-    AllUp_utils.wiki.push('模板:AllUp','MAIN',AllUp_content)
+    AllUp_utils.wiki.push('AllUp','MAIN',AllUp_content)
