@@ -31,3 +31,5 @@ def pull(title : str,split_line = False):
 
 def push(title : str,content_id : str,content : str):
     open(f'{title}.wikitext', 'w').write(content)
+    if PR_TEST():
+        print(f'### {content_id}\n\n```go\n{content}\n```\n\n',file = open('PR_preview.md','a'))
