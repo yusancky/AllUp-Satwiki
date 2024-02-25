@@ -14,7 +14,7 @@ def pull(title : str,split_line = False):
     if MAIN_REPO_BRANCH() or PR_TEST():
         match title:
             case '模板:天宫空间站任务列表/echarts/data':
-                return [line.replace('\n','') for line in open('test-sources/TSS-data.wikitext')]
+                return [line.replace('\n','') for line in open('TSS-data/TSS-data.wikitext')]
             case _:
                 print('Unable to find test sources.')
                 try:
