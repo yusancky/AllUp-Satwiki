@@ -39,7 +39,6 @@ jobs:
       - uses: actions4git/setup-git@v1
       - run: |
           git checkout --orphan artifact/${{ github.ref }}
-          git reset HEAD
           git add AllUp.wikitext
           git commit -m "Update data"
           git push --force origin artifact/${{ github.ref }}
