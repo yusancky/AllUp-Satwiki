@@ -36,18 +36,10 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          # SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
-      - name: TSS
-        run: python TSS.py
-        env:
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_REF: ${{ github.ref }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          # SATWIKI_PASSWORD: ${{ secrets.SATWIKI_PASSWORD }}
       - uses: actions4git/setup-git@v1
       - run: |
           git checkout --orphan artifact/${{ github.ref }}
-          git add AllUp.wikitext 天宫空间站任务列表Echarts.wikitext
+          git add AllUp.wikitext
           git commit -m "Update data"
           git push --force origin artifact/${{ github.ref }}
       - name: Preview on Pull Request
