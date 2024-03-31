@@ -30,18 +30,18 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
+      - name: Configure DNS
+        run: |
+          sudo systemd-resolve --set-dns=114.114.114.114 --set-dns=223.6.6.6
+          cat /run/systemd/resolve/resolv.conf
+          sudo systemctl restart systemd-resolved.service
       - name: Main
         run: python main.py
         env:
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      - uses: actions4git/setup-git@v1
-      - run: |
-          git checkout --orphan artifact/${{ github.ref }}
-          git add AllUp.wikitext
-          git commit -m "Update data"
-          git push --force origin artifact/${{ github.ref }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2.4.2
