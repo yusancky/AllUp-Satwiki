@@ -32,9 +32,9 @@ jobs:
         run: pip install -r requirements.txt
       - name: Configure DNS
         run: |
-          sudo systemd-resolve --set-dns=114.114.114.114 --set-dns=223.6.6.6
-          cat /run/systemd/resolve/resolv.conf
-          sudo systemctl restart systemd-resolved.service
+          sudo systemctl enable --now systemd-resolved
+          sudo resolvectl dns --global 114.114.114.114
+          resolvectl status
       - name: Main
         run: python main.py
         env:
