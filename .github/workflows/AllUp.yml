@@ -30,11 +30,6 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: Configure DNS
-        run: |
-          sudo systemctl enable --now systemd-resolved
-          sudo resolvectl dns --global 114.114.114.114
-          resolvectl status
       - name: Main
         run: python main.py
         env:
