@@ -29,7 +29,13 @@ def pull(title : str,split_line = False):
         except:
             print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
 
-def push(title : str,content_id : str,content : str):
-    open(f'{title}.wikitext', 'w').write(content)
+def push(content : str):
+    if MAIN_REPO_BRANCH() or PR_TEST():
+        try:
+            wiki = Wiki('sat.huijiwiki.com', '雨伞CKY', environ['BOT_PASSWORD'])
+            wiki.edit('模板:AllUp', content, 'Edit via AllUp-Satwiki')
+        except Exception:
+            pass
+    
     if PR_TEST():
         print(f'### {content_id}\n\n```go\n{content}\n```\n\n',file = open('PR_preview.md','a'))

@@ -32,18 +32,14 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
+      - run: echo "220.160.46.235 sat.huijiwiki.com" >> /etc/hosts
       - name: Main
         run: python main.py
         env:
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      - uses: actions4git/setup-git@v1
-      - run: |
-          git checkout --orphan artifact/${{ github.ref }}
-          git add AllUp.wikitext
-          git commit -m "Update data"
-          git push --force origin artifact/${{ github.ref }}
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2.4.2
