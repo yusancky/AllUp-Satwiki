@@ -32,7 +32,9 @@ def pull(title : str,split_line = False):
 def push(content : str):
     if MAIN_REPO_BRANCH() or PR_TEST():
         try:
-            wiki = Wiki('sat.huijiwiki.com', '雨伞CKY', environ['BOT_PASSWORD'])
+            wiki = Wiki('https://27.152.181.231', '雨伞CKY', environ['BOT_PASSWORD'])
+            wiki.verify = False
+            wiki.client.headers.update({'Host': 'sat.huijiwiki.com'})
             wiki.edit('模板:AllUp', content, 'Edit via AllUp-Satwiki')
         except Exception:
             pass

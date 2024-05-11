@@ -32,7 +32,6 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - run: echo "220.160.46.235 sat.huijiwiki.com" >> /etc/hosts
       - name: Main
         run: python main.py
         env:
