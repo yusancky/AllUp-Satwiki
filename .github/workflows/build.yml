@@ -1,4 +1,4 @@
-name: AllUp
+name: Build
 
 on:
   push:
@@ -20,7 +20,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  AllUp:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,8 +32,8 @@ jobs:
           cache: 'pip'
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
-      - name: Main
-        run: python main.py
+      - name: build
+        run: python build.py
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
