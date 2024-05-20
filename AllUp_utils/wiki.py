@@ -30,5 +30,8 @@ def pull(title : str,split_line = False):
             print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
 
 def push(content : str):
-    wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['BOT_PASSWORD'])
-    wiki.edit('模板:AllUp',content,'Edit via AllUp-Satwiki')
+    if MAIN_REPO_BRANCH():
+        wiki = Wiki('sat.huijiwiki.com','雨伞CKY',environ['BOT_PASSWORD'])
+        wiki.edit('模板:AllUp',content,'Edit via AllUp-Satwiki')
+    else:
+        print(f'### {content_id}\n\n```go\n{content}\n```\n\n',file = open('PR_preview.md','a'))
