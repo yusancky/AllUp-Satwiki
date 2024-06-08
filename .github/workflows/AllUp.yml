@@ -31,9 +31,9 @@ jobs:
       - name: Install Python Dependencies
         run: pip install -r requirements.txt
       - run: |
-          python
-          import requests
-          print(requests.get('https://sat.huijiwiki.com').status_code)
+          echo 'import requests
+          print(requests.get("https://sat.huijiwiki.com").status_code) > script.py
+          python script.py
       - name: Main
         run: python main.py
         env:
