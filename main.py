@@ -13,6 +13,7 @@ def make(id):
         case 't':
             return strftime('%Y年%m月%d日%H时',localtime())
         case '1':
+            return '因上游数据进行格式调整，{{AllUp|1}} 暂时停用！{{需要更新}}'
             web_data = AllUp_utils.web.fetch_data(
                 'https://voyager.jpl.nasa.gov/mission/status/',
                 chromedriver
