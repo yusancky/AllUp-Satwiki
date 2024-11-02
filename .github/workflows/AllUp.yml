@@ -1,0 +1,52 @@
+name: AllUp
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  schedule:
+    - cron: '26 1 * * 5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  AllUp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Setup Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install Python Dependencies
+        run: pip install -r requirements.txt
+      - name: Main
+        run: python main.py
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+      - uses: actions4git/setup-git@v1
+      - run: |
+          git checkout --orphan artifact/${{ github.ref }}
+          git add AllUp.wikitext
+          git commit -m "Update data"
+          git push --force origin artifact/${{ github.ref }}
+      - name: Preview on Pull Request
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v2.4.2
+        with:
+          filePath: PR_preview.md
+          comment_tag: actions-wikitext-preview
