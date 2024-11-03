@@ -42,7 +42,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
       - run: |
           git checkout --orphan artifact
-          git rm rf .
+          git rm -rf .
           git add AllUp.wikitext
           git commit -m "Update data"
           git push --force origin artifact
