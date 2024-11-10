@@ -13,7 +13,7 @@ def make(id):
         case 't':
             return strftime('%Y年%m月%d日%H时',localtime())
         case '1':
-            return '因上游数据进行格式调整，{{AllUp|1}} 暂时停用！{{需要更新}}'
+            return '因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}'
             web_data = AllUp_utils.web.fetch_data(
                 'https://voyager.jpl.nasa.gov/mission/status/',
                 chromedriver
@@ -47,7 +47,7 @@ def make(id):
         case '4':
             missions = []
             today = date.today()
-            dataset = AllUp_utils.wiki.pull('模板:天宫空间站任务列表/echarts/data',split_line = True)
+            dataset = [line.replace('\n','') for line in open('TSS-data/TSS-data.wikitext')]
             for row in dataset:
                 data = row.split(',')
                 start_date = date.fromisoformat(data[2])
