@@ -42,10 +42,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
       - run: |
           git checkout --orphan artifact
-          git rm -rf .
           git add AllUp.wikitext
           git commit -m "Update data"
-          git push --force origin artifact
+          git push --force origin artifact/main
         if: github.ref == 'refs/heads/main'
       - name: Preview on Pull Request
         if: ${{ github.event_name == 'pull_request' }}
