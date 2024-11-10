@@ -12,16 +12,12 @@ def MAIN_REPO_BRANCH():
     
 def pull(title : str,split_line = False):
     if MAIN_REPO_BRANCH() or PR_TEST():
-        match title:
-            case '模板:天宫空间站任务列表/echarts/data':
-                return [line.replace('\n','') for line in open('TSS-data/TSS-data.wikitext')]
-            case _:
-                print('Unable to find test sources.')
-                try:
-                    wiki = Wiki('sat.huijiwiki.com')
-                    return wiki.page_text(title)
-                except:
-                    print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
+        print('Unable to find test sources.')
+        try:
+            wiki = Wiki('sat.huijiwiki.com')
+            return wiki.page_text(title)
+        except:
+            print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
     else:
         try:
             wiki = Wiki('sat.huijiwiki.com')
