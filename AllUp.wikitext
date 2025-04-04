@@ -1,0 +1,59 @@
+<includeonly>{{#switch:{{{1|}}}|t=2025年04月04日10时|1=因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}|2={{#switch:{{{section|}}}|Inclination=51.967&deg;|Eccentricity=0.02746|RA ascending node=4.997&nbsp;hr|Argument perigee=324.353&deg;|Mean anomaly=33.940&deg;|Orbital period=91.543&nbsp;min|Epoch of osculation=03 Apr 2025, 10:42|#default=请输入正确的选项名！}}|3={{#switch:{{{section|}}}|1=8186|2=1038|3=7148|4=7118|#default=请输入正确的选项名！}}|4={{#echarts:option={
+  "title": {
+    "text": "天宫空间站任务列表",
+    "subtext": "上次更新：2025年4月4日（1436）"
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "shadow"
+    }
+  },
+  "grid": {
+    "left": "3%",
+    "right": "4%",
+    "bottom": "3%",
+    "containLabel": true
+  },
+  "xAxis": {
+    "type": "value"
+  },
+  "yAxis": {
+    "type": "category",
+    "splitLine": {
+      "show": false
+    },
+    "data": ["天舟八号", "神舟十九号", "神舟十八号", "天舟七号", "神舟十七号", "神舟十六号", "天舟六号", "神舟十五号", "天舟五号", "梦天实验舱", "问天实验舱", "神舟十四号", "天舟四号", "神舟十三号", "天舟三号", "神舟十二号", "天舟二号", "天和核心舱"]
+  },
+  "series": [
+    {
+      "name": "发射时间",
+      "type": "bar",
+      "stack": "Total",
+      "itemStyle": {
+        "borderColor": "transparent",
+        "color": "transparent"
+      },
+      "emphasis": {
+        "itemStyle": {
+          "borderColor": "transparent",
+          "color": "transparent"
+        }
+      },
+      "data": [1296, 1280, 1092, 993, 910, 761, 741, 579, 562, 550, 451, 402, 376, 170, 144, 49, 30, 0]
+    },
+    {
+      "name": "已进行任务天数",
+      "type": "bar",
+      "stack": "Total",
+      "label": {
+        "show": true,
+        "position": "inside"
+      },
+      "data": [
+        {"value": 140, "itemStyle": {"color": "#fcd34d"} },{"value": 156, "itemStyle": {"color": "#fcd34d"} },{"value": 193, "itemStyle": {"color": "#6ee7b7"} },{"value": 305, "itemStyle": {"color": "#6ee7b7"} },{"value": 187, "itemStyle": {"color": "#6ee7b7"} },{"value": 154, "itemStyle": {"color": "#6ee7b7"} },{"value": 254, "itemStyle": {"color": "#6ee7b7"} },{"value": 187, "itemStyle": {"color": "#6ee7b7"} },{"value": 304, "itemStyle": {"color": "#6ee7b7"} },{"value": 886, "itemStyle": {"color": "#fdba74"} },{"value": 985, "itemStyle": {"color": "#fdba74"} },{"value": 182, "itemStyle": {"color": "#6ee7b7"} },{"value": 189, "itemStyle": {"color": "#6ee7b7"} },{"value": 182, "itemStyle": {"color": "#6ee7b7"} },{"value": 310, "itemStyle": {"color": "#6ee7b7"} },{"value": 92, "itemStyle": {"color": "#6ee7b7"} },{"value": 306, "itemStyle": {"color": "#6ee7b7"} },{"value": 1436, "itemStyle": {"color": "#fdba74"} }
+      ]
+    }
+  ]
+}
+|style=min-height:380px}}|#default=请输入正确的AllUp编号！}}</includeonly><noinclude>[[Category:模板]]{{documentation}}</noinclude>
