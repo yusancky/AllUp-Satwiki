@@ -135,8 +135,12 @@ def make(id):
                 dataInner = {'switch_key': 'section'}
                 dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',web_data)
                 for section in range(4):
-                    dataInner[str(section + 1)] = dataset[0][section]
-                    data['#default'] = '请输入正确的选项名！'
+                    try:
+                        dataInner[str(section + 1)] = dataset[0][section]
+                    except Exception as e:
+
+                        dataInner[str(section + 1)] = str(e)
+                dataInner['#default'] = '请输入正确的选项名！'
                 data[sat] = AllUp_utils.wikitext.build_switch(dataInner)
             data['#default'] = '请输入正确的卫星名！'
             return AllUp_utils.wikitext.build_switch(data)
