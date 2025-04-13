@@ -128,6 +128,18 @@ def make(id):
   ]
 }}
 |style=min-height:380px}}}}'''
+        case '5':
+            data = {'switch_key': 'sat'}
+            for sat in ['star', 'ow', 'kp', 'stsh', 'xw', 'qf', 'ynh', 'lynk', 'esp', 's1m', 'pln', 'iri', 'gbl', 'jil', 'slog', 'asts', 'swa', 'glo', 'spr', 'st3', 'par', 'gps', 'bei', 'oco', 'hwk', 'kep', 'int', 'ses']:
+                web_data = AllUp_utils.web.fetch_data(f'https://planet4589.org/space/con/{sat}/stats.html')
+                dataInner = {'switch_key': 'section'}
+                dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',web_data)
+                for section in range(4):
+                    dataInner[str(section + 1)] = dataset[0][section]
+                    data['#default'] = '请输入正确的选项名！'
+                data[sat] = AllUp_utils.wikitext.build_switch(dataInner)
+            data['#default'] = '请输入正确的卫星名！'
+            return AllUp_utils.wikitext.build_switch(data)
         case _:
             return '请输入正确的AllUp编号！'
 
