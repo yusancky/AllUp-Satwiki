@@ -146,7 +146,7 @@ def make(id):
 if __name__ == '__main__':
     chromedriver = AllUp_utils.web.configure_chromedriver()
     AllUp_data = {'switch_key': '1'}
-    for dataset in ['t'] + [str(i + 1) for i in range(4)] + ['#default']:
+    for dataset in ['t'] + [str(i + 1) for i in range(5)] + ['#default']:
         AllUp_data[dataset] = make(dataset)
     AllUp_content = f'<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>'
     AllUp_utils.wiki.push('AllUp','MAIN',AllUp_content)
