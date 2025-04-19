@@ -66,67 +66,67 @@ def build_tiangong_chart():
 
   data_name = [mission[0] for mission in missions]
   start_date = [(mission[1] - date.fromisoformat('20210429')).days for mission in missions]
-  delta_days_with_data_color = [
-    {"value": mission[2], "itemStyle": {"color": mission[3]}} for mission in missions
-  ]
+  delta_days_with_data_color = [ f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},{delta_days_with_data_color}' for mission in missions ]
 
   return f'''{{{{#echarts:option={{
-"title": {{
-  "text": "天宫空间站任务列表",
-  "subtext": "上次更新：{today.year}年{today.month}月{today.day}日（{(today - date.fromisoformat('20210429')).days}天）"
-}},
-"tooltip": {{
-  "trigger": "axis",
-  "axisPointer": {{
-    "type": "shadow"
-  }}
-}},
-"grid": {{
-  "left": "3%",
-  "right": "4%",
-  "bottom": "3%",
-  "containLabel": true
-}},
-"xAxis": {{
-  "type": "value"
-}},
-"yAxis": {{
-  "type": "category",
-  "splitLine": {{
-    "show": false
+  "title": {{
+    "text": "天宫空间站任务列表",
+    "subtext": "上次更新：{date.today().year}年{date.today().month}月{date.today().day}日（{(date.today() - date.fromisoformat('20210429')).days}）"
   }},
-  "data": {data_name}
-}},
-"series": [
-  {{
-    "name": "发射时间",
-    "type": "bar",
-    "stack": "Total",
-    "itemStyle": {{
-      "borderColor": "transparent",
-      "color": "transparent"
+  "tooltip": {{
+    "trigger": "axis",
+    "axisPointer": {{
+      "type": "shadow"
+    }}
+  }},
+  "grid": {{
+    "left": "3%",
+    "right": "4%",
+    "bottom": "3%",
+    "containLabel": true
+  }},
+  "xAxis": {{
+    "type": "value"
+  }},
+  "yAxis": {{
+    "type": "category",
+    "splitLine": {{
+      "show": false
     }},
-    "emphasis": {{
+    "data": {str(data_name).replace("'",'"')}
+  }},
+  "series": [
+    {{
+      "name": "发射时间",
+      "type": "bar",
+      "stack": "Total",
       "itemStyle": {{
         "borderColor": "transparent",
         "color": "transparent"
-      }}
+      }},
+      "emphasis": {{
+        "itemStyle": {{
+          "borderColor": "transparent",
+          "color": "transparent"
+        }}
+      }},
+      "data": {start_date}
     }},
-    "data": {start_date}
-  }},
-  {{
-    "name": "已进行任务天数",
-    "type": "bar",
-    "stack": "Total",
-    "label": {{
-      "show": true,
-      "position": "inside"
-    }},
-    "data": {delta_days_with_data_color}
-  }}
-]
-}}}}}}'''
-
+    {{
+      "name": "已进行任务天数",
+      "type": "bar",
+      "stack": "Total",
+      "label": {{
+        "show": true,
+        "position": "inside"
+      }},
+      "data": [
+        {delta_days_with_data_color}
+      ]
+    }}
+  ]
+}}
+|style=min-height:380px}}}}'''
 
 def fetch_satellite_data():
   """Fetch data for multiple satellites."""
