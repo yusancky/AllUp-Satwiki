@@ -1,0 +1,59 @@
+<includeonly>{{#switch:{{{1|}}}|t=2025年04月19日14时|1=因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}|2={{#switch:{{{section|}}}|Inclination=51.960&deg;|Eccentricity=0.02188|RA ascending node=23.937&nbsp;hr|Argument perigee=19.012&deg;|Mean anomaly=341.889&deg;|Orbital period=90.651&nbsp;min|Epoch of osculation=18 Apr 2025, 04:23|#default=请输入正确的选项名！}}|3={{#switch:{{{section|}}}|1=8316|2=1076|3=7240|4=7213|#default=请输入正确的选项名！}}|4={{#echarts:option={
+  "title": {
+    "text": "天宫空间站任务列表",
+    "subtext": "上次更新：2025年4月19日（1451）"
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "shadow"
+    }
+  },
+  "grid": {
+    "left": "3%",
+    "right": "4%",
+    "bottom": "3%",
+    "containLabel": true
+  },
+  "xAxis": {
+    "type": "value"
+  },
+  "yAxis": {
+    "type": "category",
+    "splitLine": {
+      "show": false
+    },
+    "data": ["天舟八号", "神舟十九号", "神舟十八号", "天舟七号", "神舟十七号", "神舟十六号", "天舟六号", "神舟十五号", "天舟五号", "梦天实验舱", "问天实验舱", "神舟十四号", "天舟四号", "神舟十三号", "天舟三号", "神舟十二号", "天舟二号", "天和核心舱"]
+  },
+  "series": [
+    {
+      "name": "发射时间",
+      "type": "bar",
+      "stack": "Total",
+      "itemStyle": {
+        "borderColor": "transparent",
+        "color": "transparent"
+      },
+      "emphasis": {
+        "itemStyle": {
+          "borderColor": "transparent",
+          "color": "transparent"
+        }
+      },
+      "data": [1296, 1280, 1092, 993, 910, 761, 741, 579, 562, 550, 451, 402, 376, 170, 144, 49, 30, 0]
+    },
+    {
+      "name": "已进行任务天数",
+      "type": "bar",
+      "stack": "Total",
+      "label": {
+        "show": true,
+        "position": "inside"
+      },
+      "data": [
+        {"value": 155, "itemStyle": {"color": "#fcd34d"} },{"value": 171, "itemStyle": {"color": "#fcd34d"} },{"value": 193, "itemStyle": {"color": "#6ee7b7"} },{"value": 305, "itemStyle": {"color": "#6ee7b7"} },{"value": 187, "itemStyle": {"color": "#6ee7b7"} },{"value": 154, "itemStyle": {"color": "#6ee7b7"} },{"value": 254, "itemStyle": {"color": "#6ee7b7"} },{"value": 187, "itemStyle": {"color": "#6ee7b7"} },{"value": 304, "itemStyle": {"color": "#6ee7b7"} },{"value": 901, "itemStyle": {"color": "#fdba74"} },{"value": 1000, "itemStyle": {"color": "#fdba74"} },{"value": 182, "itemStyle": {"color": "#6ee7b7"} },{"value": 189, "itemStyle": {"color": "#6ee7b7"} },{"value": 182, "itemStyle": {"color": "#6ee7b7"} },{"value": 310, "itemStyle": {"color": "#6ee7b7"} },{"value": 92, "itemStyle": {"color": "#6ee7b7"} },{"value": 306, "itemStyle": {"color": "#6ee7b7"} },{"value": 1451, "itemStyle": {"color": "#fdba74"} }
+      ]
+    }
+  ]
+}
+|style=min-height:380px}}|5={{#switch:{{{sat|}}}|star={{#switch:{{{section|}}}|1=8316|2=1076|3=7240|4=7213|#default=请输入正确的选项名！}}|ow={{#switch:{{{section|}}}|1=660|2=6|3=654|4=652|#default=请输入正确的选项名！}}|kp={{#switch:{{{section|}}}|1=2|2=1|3=1|4=1|#default=请输入正确的选项名！}}|stsh={{#switch:{{{section|}}}|1=171|2=4|3=167|4=167|#default=请输入正确的选项名！}}|xw={{#switch:{{{section|}}}|1=40|2=0|3=40|4=40|#default=请输入正确的选项名！}}|qf={{#switch:{{{section|}}}|1=90|2=0|3=90|4=77|#default=请输入正确的选项名！}}|ynh={{#switch:{{{section|}}}|1=8|2=0|3=8|4=7|#default=请输入正确的选项名！}}|lynk={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|esp={{#switch:{{{section|}}}|1=4|2=3|3=1|4=1|#default=请输入正确的选项名！}}|s1m={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|pln={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|iri={{#switch:{{{section|}}}|1=170|2=68|3=102|4=73|#default=请输入正确的选项名！}}|gbl={{#switch:{{{section|}}}|1=90|2=6|3=84|4=29|#default=请输入正确的选项名！}}|jil={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|slog={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|asts={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|swa={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|glo={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|spr={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|st3={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|par={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|gps={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|bei={{#switch:{{{section|}}}|1=63|2=0|3=63|4=57|#default=请输入正确的选项名！}}|oco={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|hwk={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|kep={{#switch:{{{section|}}}|1=list index out of range|2=list index out of range|3=list index out of range|4=list index out of range|#default=请输入正确的选项名！}}|int={{#switch:{{{section|}}}|1=123|2=2|3=121|4=43|#default=请输入正确的选项名！}}|ses={{#switch:{{{section|}}}|1=65|2=1|3=64|4=38|#default=请输入正确的选项名！}}|#default=请输入正确的卫星名！}}|#default=请输入正确的AllUp编号！}}</includeonly><noinclude>[[Category:模板]]{{documentation}}</noinclude>
