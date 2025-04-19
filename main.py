@@ -39,7 +39,7 @@ def fetch_starlink_data():
   """Fetch Starlink mission data."""
   web_data = AllUp_utils.web.fetch_data('https://planet4589.org/space/con/star/stats.html')
   data = {'switch_key': 'section'}
-  dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD></TR>', web_data)
+  dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',web_data)
   for section in range(4):
     data[str(section + 1)] = dataset[0][section]
   data['#default'] = '请输入正确的选项名！'
@@ -139,7 +139,7 @@ def fetch_satellite_data():
   for sat in satellites:
     web_data = AllUp_utils.web.fetch_data(f'https://planet4589.org/space/con/{sat}/stats.html')
     data_inner = {'switch_key': 'section'}
-    dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD></TR>', web_data)
+    dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',web_data)
     for section in range(4):
       try:
         data_inner[str(section + 1)] = dataset[0][section]
