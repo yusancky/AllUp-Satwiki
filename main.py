@@ -8,7 +8,6 @@ from datetime import date
 from re import compile, findall
 from time import localtime, strftime
 
-
 def fetch_voyager_data():
   """[Deprecated] Fetch Voyager mission data."""
   web_data = AllUp_utils.web.fetch_data('https://voyager.jpl.nasa.gov/mission/status/')
@@ -51,7 +50,6 @@ def build_tiangong_chart():
   missions = []
   today = date.today()
   dataset = [line.strip() for line in open('TSS-data/TSS-data.wikitext')]
-
   for row in dataset:
     data = row.split(',')
     start_date = date.fromisoformat(data[2])
@@ -63,11 +61,12 @@ def build_tiangong_chart():
       delta_days,
       '#fdba74' if data[1] == 'main' else ('#6ee7b7' if data[3] != 'future' else '#fcd34d')
     ])
-
-  data_name = [mission[0] for mission in missions]
-  start_date = [(mission[1] - date.fromisoformat('20210429')).days for mission in missions]
-  delta_days_with_data_color = [ f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},{delta_days_with_data_color}' for mission in missions ]
-
+  data_name,start_date,delta_days_with_data_color = [],[],''
+  for mission in missions:
+    data_name.insert(0,mission[0])
+    start_date.insert(0,(mission[1] - date.fromisoformat('20210429')).days)
+    delta_days_with_data_color = f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},{delta_days_with_data_color}'
+  delta_days_with_data_color = delta_days_with_data_color[:-1]
   return f'''{{{{#echarts:option={{
   "title": {{
     "text": "天宫空间站任务列表",
