@@ -1,6 +1,3 @@
-# Copyright (c) yusancky. All rights reserved. 
-# Licensed under the Apache License 2.0. See License in the project root for license information. 
-
 import AllUp_utils.wiki
 import AllUp_utils.web
 import AllUp_utils.wikitext
@@ -128,6 +125,29 @@ def build_tiangong_chart():
 }}}}}}'''
 
 
+def fetch_satellite_data():
+  """Fetch data for multiple satellites."""
+  data = {'switch_key': 'sat'}
+  satellites = [
+    'star', 'ow', 'kp', 'stsh', 'xw', 'qf', 'ynh', 'lynk', 'esp', 's1m', 'pln',
+    'iri', 'gbl', 'jil', 'slog', 'asts', 'swa', 'glo', 'spr', 'st3', 'par',
+    'gps', 'bei', 'oco', 'hgn'
+  ]
+  for sat in satellites:
+    web_data = AllUp_utils.web.fetch_data(f'https://planet4589.org/space/con/{sat}/stats.html')
+    data_inner = {'switch_key': 'section'}
+    dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD></TR>', web_data)
+    for section in range(4):
+      try:
+        data_inner[str(section + 1)] = dataset[0][section]
+      except Exception as e:
+        data_inner[str(section + 1)] = str(e)
+    data_inner['#default'] = '请输入正确的选项名！'
+    data[sat] = AllUp_utils.wikitext.build_switch(data_inner)
+  data['#default'] = '请输入正确的卫星名！'
+  return AllUp_utils.wikitext.build_switch(data)
+
+
 def make(id):
   """Main switch function."""
   match id:
@@ -141,6 +161,8 @@ def make(id):
       return fetch_starlink_data()
     case '4':
       return build_tiangong_chart()
+    case '5':
+      return fetch_satellite_data()
     case _:
       return '请输入正确的AllUp编号！'
 
