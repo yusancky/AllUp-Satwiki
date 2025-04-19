@@ -10,7 +10,7 @@ from time import localtime, strftime
 
 
 def fetch_voyager_data():
-  """Fetch Voyager mission data."""
+  """[Deprecated] Fetch Voyager mission data."""
   web_data = AllUp_utils.web.fetch_data('https://voyager.jpl.nasa.gov/mission/status/')
   data = {'switch_key': 'id'}
   for id in [str(i + 1) for i in range(2)]:
@@ -157,7 +157,8 @@ def make(id):
     case 't':
       return strftime('%Y年%m月%d日%H时', localtime())
     case '1':
-      return fetch_voyager_data()
+      return '因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}'
+      # return fetch_voyager_data()
     case '2':
       return fetch_orbital_data()
     case '3':
