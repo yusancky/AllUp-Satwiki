@@ -23,7 +23,6 @@ def fetch_voyager_data():
   data['#default'] = '请输入正确的编号！'
   return AllUp_utils.wikitext.build_switch(data)
 
-
 def fetch_orbital_data():
   """Fetch orbital data."""
   web_data = AllUp_utils.web.fetch_data('https://in-the-sky.org/spacecraft.php?id=6073')
@@ -32,7 +31,6 @@ def fetch_orbital_data():
     data[section] = findall(f'<td>{section}</td>\n *<td>([^<>]*)</td>', web_data)[0].strip()
   data['#default'] = '请输入正确的选项名！'
   return AllUp_utils.wikitext.build_switch(data)
-
 
 def fetch_starlink_data():
   """Fetch Starlink mission data."""
@@ -43,7 +41,6 @@ def fetch_starlink_data():
     data[str(section + 1)] = dataset[0][section]
   data['#default'] = '请输入正确的选项名！'
   return AllUp_utils.wikitext.build_switch(data)
-
 
 def build_tiangong_chart():
   """Build Tiangong missions chart."""
@@ -144,7 +141,6 @@ def fetch_satellite_data():
   data['#default'] = '请输入正确的卫星名！'
   return AllUp_utils.wikitext.build_switch(data)
 
-
 def make(id):
   """Main switch function."""
   match id:
@@ -163,7 +159,6 @@ def make(id):
       return fetch_satellite_data()
     case _:
       return '请输入正确的AllUp编号！'
-
 
 if __name__ == '__main__':
   chromedriver = AllUp_utils.web.configure_chromedriver()
