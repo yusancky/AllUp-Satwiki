@@ -131,12 +131,7 @@ def build_tiangong_chart():
 def fetch_satellite_data():
   """Fetch data for multiple satellites."""
   data = {'switch_key': 'sat'}
-  satellites = [
-    'star', 'ow', 'kp', 'stsh', 'xw', 'qf', 'ynh', 'lynk', 'esp', 's1m', 'pln',
-    'iri', 'gbl', 'jil', 'slog', 'asts', 'swa', 'glo', 'spr', 'st3', 'par',
-    'gps', 'bei', 'oco', 'hgn'
-  ]
-  for sat in satellites:
+  for sat in ['star', 'ow', 'kp', 'stsh', 'xw', 'qf', 'ynh', 'lynk', 'esp', 's1m', 'pln', 'iri', 'gbl', 'jil', 'slog', 'asts', 'swa', 'glo', 'spr', 'st3', 'par', 'gps', 'bei', 'oco', 'hwk', 'kep', 'int', 'ses']:
     web_data = AllUp_utils.web.fetch_data(f'https://planet4589.org/space/con/{sat}/stats.html')
     data_inner = {'switch_key': 'section'}
     dataset = findall(r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',web_data)
