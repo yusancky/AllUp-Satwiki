@@ -11,7 +11,7 @@ def MAIN_REPO_BRANCH():
     return (environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky')
     
 def pull(title : str,split_line = False):
-    wiki = Wiki('sat.huijiwiki.com')
+    wiki = Wiki('sat.huijiwiki.com', '雨伞CKY', environ['BOT_PASSWORD'])
     wiki.client.headers["X-authkey"] = environ['X_AUTHKEY']
     return wiki.page_text(title)
 
