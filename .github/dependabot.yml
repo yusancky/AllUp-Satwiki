@@ -4,7 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "26 1 * * 5"
+      cronjob: "0 16 * * 5"
       timezone: "Asia/Shanghai"
     reviewers:
       - "yusancky"
@@ -14,7 +14,7 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "26 1 * * 5"
+      cronjob: "0 16 * * 5"
       timezone: "Asia/Shanghai"
     reviewers:
       - "yusancky"
