@@ -35,6 +35,7 @@ jobs:
       - name: Main
         run: python main.py
         env:
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
