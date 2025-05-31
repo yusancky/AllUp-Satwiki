@@ -68,7 +68,8 @@ def build_tiangong_chart():
     """Build Tiangong Space Station missions chart."""
     missions = []
     today = date.today()
-    dataset = [line.strip() for line in open("TSS-data/TSS-data.wikitext")]
+    with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as f:
+        dataset = [line.strip() for line in f]
     for row in dataset:
         data = row.split(",")
         start_date = date.fromisoformat(data[2])
