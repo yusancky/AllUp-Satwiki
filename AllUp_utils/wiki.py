@@ -12,6 +12,7 @@ def MAIN_REPO_BRANCH():
     
 def pull(title : str,split_line = False):
     wiki = Wiki('sat.huijiwiki.com')
+    wiki.client.headers["X-authkey"] = environ['X_AUTHKEY']
     return wiki.page_text(title)
 
 def push(title : str,content_id : str,content : str):
