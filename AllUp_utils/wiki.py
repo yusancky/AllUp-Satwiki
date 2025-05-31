@@ -9,13 +9,19 @@ def PR_TEST():
 
 def MAIN_REPO_BRANCH():
     return (environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky')
-    
-def pull(title : str,split_line = False):
-    wiki = Wiki('sat.huijiwiki.com', '雨伞CKY', environ['BOT_PASSWORD'])
-    wiki.client.headers["X-authkey"] = environ['X_AUTHKEY']
+
+# Subclass Wiki to inject X-authkey header prior to first request
+class AuthWiki(Wiki):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.client.headers["X-authkey"] = environ['X_AUTHKEY']
+
+def pull(title: str, split_line=False):
+    # Use AuthWiki instead of Wiki
+    wiki = AuthWiki('sat.huijiwiki.com', '雨伞CKY', environ['BOT_PASSWORD'])
     return wiki.page_text(title)
 
-def push(title : str,content_id : str,content : str):
+def push(title: str, content_id: str, content: str):
     open(f'{title}.wikitext', 'w').write(content)
     if PR_TEST():
-        print(f'### {content_id}\n\n```go\n{content}\n```\n\n',file = open('PR_preview.md','a'))
+        print(f'### {content_id}\n\n```go\n{content}\n```\n\n', file=open('PR_preview.md', 'a'))
