@@ -35,6 +35,7 @@ jobs:
       - name: Main
         run: python main.py
         env:
+          X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
