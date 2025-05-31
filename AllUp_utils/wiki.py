@@ -41,10 +41,7 @@ def pull(title: str, split_line=False):
 
 def extract_after_last_colon(s):
     last_colon_index = s.rfind(":")
-    if last_colon_index != -1:
-        return s[last_colon_index + 1 :]
-    else:
-        return s
+    return s[last_colon_index + 1 :] if last_colon_index != -1 else s
 
 
 def push(title: str, content_id: str, content: str):
