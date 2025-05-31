@@ -39,8 +39,16 @@ def pull(title: str, split_line=False):
         return ""
 
 
+def extract_after_last_colon(s):
+    last_colon_index = s.rfind(":")
+    if last_colon_index != -1:
+        return s[last_colon_index + 1 :]
+    else:
+        return s
+
+
 def push(title: str, content_id: str, content: str):
-    open(f"{title}.wikitext", "w").write(content)
+    open(f"{extract_after_last_colon(title)}.wikitext", "w").write(content)
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
     if TEST_PR:
