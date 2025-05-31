@@ -28,7 +28,7 @@ def _patched_session_init(self, *args, **kwargs):
 
 requests.Session.__init__ = _patched_session_init
 
-if MAIN_REPO_BRANCH or TEST_PR:
+if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
     wiki = Wiki("sat.huijiwiki.com", "雨伞CKY", environ["BOT_PASSWORD"])
 
 
