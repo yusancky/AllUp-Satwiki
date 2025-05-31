@@ -45,7 +45,9 @@ def extract_after_last_colon(s):
 
 
 def push(title: str, content_id: str, content: str):
-    with open(f"{extract_after_last_colon(title)}.wikitext", "w", encoding="utf-8") as f:
+    with open(
+        f"{extract_after_last_colon(title)}.wikitext", "w", encoding="utf-8"
+    ) as f:
         f.write(content)
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
