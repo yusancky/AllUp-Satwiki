@@ -11,19 +11,8 @@ def MAIN_REPO_BRANCH():
     return (environ['GITHUB_REF'] == 'refs/heads/main' and environ['GITHUB_REPOSITORY_OWNER'] == 'yusancky')
     
 def pull(title : str,split_line = False):
-    if MAIN_REPO_BRANCH() or PR_TEST():
-        print('Unable to find test sources.')
-        try:
-            wiki = Wiki('sat.huijiwiki.com')
-            return wiki.page_text(title)
-        except:
-            print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
-    else:
-        try:
-            wiki = Wiki('sat.huijiwiki.com')
-            return wiki.page_text(title)
-        except:
-            print(f'You do not have permission to get password.\nREF: {environ["GITHUB_REF"]}\nREPO_OWNER: {environ["GITHUB_REPOSITORY_OWNER"]}')
+    wiki = Wiki('sat.huijiwiki.com')
+    return wiki.page_text(title)
 
 def push(title : str,content_id : str,content : str):
     open(f'{title}.wikitext', 'w').write(content)
