@@ -1,5 +1,4 @@
 name: AllUp
-
 on:
   push:
     branches: [ main ]
@@ -11,29 +10,22 @@ on:
   schedule:
     - cron: '26 1 * * 5'
   workflow_dispatch:
-
 permissions:
   contents: write
   pull-requests: write
-
 env:
   TZ: Asia/Shanghai
-
 jobs:
   AllUp:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Setup Python
-        uses: actions/setup-python@v5.6.0
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
         with:
-          python-version: '3.12'
+          python-version: '3.13'
           cache: 'pip'
-      - name: Install Python Dependencies
-        run: pip install -r requirements.txt
-      - name: Main
-        run: python main.py
+      - run: pip install -r requirements.txt
+      - run: python main.py
         env:
           BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
