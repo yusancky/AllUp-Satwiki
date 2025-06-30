@@ -1,0 +1,48 @@
+name: activities-bugfix-2025
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/activities-bugfix-2025.yml'
+      - 'activities/bugfix-2025/**'
+      - 'AllUp_utils'
+      - 'requirements.txt'
+  pull_request:
+    paths:
+      - '.github/workflows/activities-bugfix-2025.yml'
+      - 'activities/bugfix-2025/**'
+      - 'AllUp_utils'
+      - 'requirements.txt'
+    types:
+      - opened
+      - synchronize
+      - reopened
+  schedule:
+    - cron: '0 5,14 * 6,7,8 *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  activities-bugfix-2025:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python activities/bugfix-2025/main.py
+        env:
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
+          X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+      - name: Preview on Pull Request
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v3.0.1
+        with:
+          file-path: PR_preview.md
+          comment-tag: actions-wikitext-preview
