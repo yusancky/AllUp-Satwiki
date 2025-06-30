@@ -5,13 +5,13 @@ on:
     paths:
       - '.github/workflows/activities-bugfix-2025.yml'
       - 'activities/bugfix-2025/**'
-      - 'AllUp_utils'
+      - 'AllUp_utils/**'
       - 'requirements.txt'
   pull_request:
     paths:
       - '.github/workflows/activities-bugfix-2025.yml'
       - 'activities/bugfix-2025/**'
-      - 'AllUp_utils'
+      - 'AllUp_utils/**'
       - 'requirements.txt'
     types:
       - opened
