@@ -27,9 +27,5 @@ if __name__ == "__main__":
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            leaderboard += (
-                f"|-\n| '''{current_rank}''' || [[用户:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n"
-            )
-    AllUp_utils.wiki.push(
-        "Template:天热站破公示/leaderboard", "BugFix-2025-leaderboard", leaderboard
-    )
+            leaderboard += f"|-\n| '''{current_rank}''' || [[用户:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n"
+    AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
