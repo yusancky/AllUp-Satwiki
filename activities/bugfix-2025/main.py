@@ -20,7 +20,7 @@ if __name__ == "__main__":
     ):
         current_rank, same_score_count = 1, 1
         leaderboard += (
-            f"|-\n| '''1''' || [[用户:{sorted_users[0][0]}]] || {sorted_users[0][1]}\n"
+            f"|-\n| '''<center>1</center>''' || [[用户:{sorted_users[0][0]}]] || <font color=\"#D6E\">'''<center>{sorted_users[0][1]}</center>'''</font>\n"
         )
         for i in range(1, len(sorted_users)):
             if sorted_users[i][1] == sorted_users[i - 1][1]:
@@ -28,6 +28,8 @@ if __name__ == "__main__":
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            leaderboard += f"|-\n| '''{current_rank}''' || [[用户:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n"
-    leaderboard += "|}"
+            leaderboard += f"|-\n| '''<center>{current_rank}</center>''' || [[用户:{sorted_users[i][0]}]] || {'<font color=\"#D6E\">' if current_rank <= 5  else ''}'''<center>{sorted_users[i][1]}</center>'''{'</font>' if current_rank <= 5  else ''}\n"
+    leaderboard += (
+        "|-\n| colspan=\"3\" | 统计图表基于[https://github.com/yusancky/AllUp-Satwiki '''AllUp-Satwiki''']生成，于<small>（北京时间）</small>每天13时、22时<small>（可能有一定延迟）</small>自动更新。\n|}"
+    )
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
