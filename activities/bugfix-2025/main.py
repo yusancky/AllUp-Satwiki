@@ -15,8 +15,9 @@ if __name__ == "__main__":
         username = match[0]
         score = int(match[2])
         user_scores[username] += score
-    sorted_users = sorted(user_scores.items(), key=lambda x: x[1], reverse=True)
-    if sorted_users:
+    if sorted_users := sorted(
+        user_scores.items(), key=lambda x: x[1], reverse=True
+    ):
         current_rank, same_score_count = 1, 1
         leaderboard += (
             f"|-\n| '''1''' || [[用户:{sorted_users[0][0]}]] || {sorted_users[0][1]}\n"
