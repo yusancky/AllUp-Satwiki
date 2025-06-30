@@ -2,7 +2,19 @@ name: AllUp
 on:
   push:
     branches: [ main ]
+    paths:
+      - '.github/workflows/AllUp.yml'
+      - 'main.py'
+      - 'TSS-data/**'
+      - 'AllUp_utils/**'
+      - 'requirements.txt'
   pull_request:
+    paths:
+      - '.github/workflows/AllUp.yml'
+      - 'main.py'
+      - 'TSS-data/**'
+      - 'AllUp_utils/**'
+      - 'requirements.txt'
     types:
       - opened
       - synchronize
