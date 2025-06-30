@@ -1,18 +1,16 @@
-name: AllUp
+name: activities-bugfix-2025
 on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/AllUp.yml'
-      - 'main.py'
-      - 'TSS-data/**'
+      - '.github/workflows/activities-bugfix-2025.yml'
+      - 'activities/bugfix-2025/**'
       - 'AllUp_utils/**'
       - 'requirements.txt'
   pull_request:
     paths:
-      - '.github/workflows/AllUp.yml'
-      - 'main.py'
-      - 'TSS-data/**'
+      - '.github/workflows/activities-bugfix-2025.yml'
+      - 'activities/bugfix-2025/**'
       - 'AllUp_utils/**'
       - 'requirements.txt'
     types:
@@ -20,15 +18,13 @@ on:
       - synchronize
       - reopened
   schedule:
-    - cron: '26 1 * * *'
+    - cron: '0 5,14 * 6,7,8 *'
   workflow_dispatch:
 permissions:
   contents: write
   pull-requests: write
-env:
-  TZ: Asia/Shanghai
 jobs:
-  AllUp:
+  activities-bugfix-2025:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.2.2
@@ -37,20 +33,11 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - run: python main.py
+      - run: PYTHONPATH=. python activities/bugfix-2025/main.py
         env:
           BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      - run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan artifact/main
-          git reset
-          git add AllUp.wikitext
-          git commit -m "Update data"
-          git push --force origin artifact/main
-        if: github.ref == 'refs/heads/main'
       - run: cat preview.md >> $GITHUB_STEP_SUMMARY
