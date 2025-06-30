@@ -39,14 +39,15 @@ def pull(title: str, split_line=False):
         return ""
 
 
-def extract_after_last_colon(s):
+def build_wikitext_filename(s):
     last_colon_index = s.rfind(":")
-    return s[last_colon_index + 1 :] if last_colon_index != -1 else s
+    s = s[last_colon_index + 1 :] if last_colon_index != -1
+    return s.replace('/', '--')
 
 
 def push(title: str, content: str):
     with open(
-        f"{extract_after_last_colon(title)}.wikitext", "w+", encoding="utf-8"
+        f"{build_wikitext_filename(title)}.wikitext", "w+", encoding="utf-8"
     ) as f:
         f.write(content)
     with open("preview.md", "a+") as f:
