@@ -33,7 +33,7 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - run: python activities/bugfix-2025/main.py
+      - run: PYTHONPATH=. python activities/bugfix-2025/main.py
         env:
           BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
           X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
