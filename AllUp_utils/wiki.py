@@ -41,7 +41,8 @@ def pull(title: str, split_line=False):
 
 def build_wikitext_filename(s):
     last_colon_index = s.rfind(":")
-    s = s[last_colon_index + 1 :] if last_colon_index != -1
+    if last_colon_index != -1:
+        s = s[last_colon_index + 1 :]
     return s.replace('/', '--')
 
 
