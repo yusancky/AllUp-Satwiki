@@ -51,8 +51,7 @@ def push(title: str, content_id: str, content: str):
         f.write(content)
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
-    if TEST_PR:
-        print(
-            f"### {content_id}\n\n```go\n{content}\n```\n\n",
-            file=open("PR_preview.md", "a"),
-        )
+    print(
+        f"### {content_id}\n\n```go\n{content}\n```\n\n",
+        file=open("preview.md", "a"),
+    )
