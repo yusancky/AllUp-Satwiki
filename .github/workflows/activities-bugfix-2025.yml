@@ -40,9 +40,4 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      - name: Preview on Pull Request
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: thollander/actions-comment-pull-request@v3.0.1
-        with:
-          file-path: PR_preview.md
-          comment-tag: actions-wikitext-preview
+      - run: cat preview.md >> $GITHUB_STEP_SUMMARY
