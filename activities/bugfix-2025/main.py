@@ -8,7 +8,7 @@ from re import findall
 if __name__ == "__main__":
     leaderboard = '{| class="wikitable" style="background: #FFF"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
-    pulled_content = AllUp_utils.wiki.pull("博客:天热了，让你站破产吧")
+    pulled_content = AllUp_utils.wiki.pull("博客:天热了，让你站破产吧#公示")
     matches = findall(pattern, pulled_content)
     user_scores = defaultdict(int)
     for match in matches:
@@ -25,5 +25,5 @@ if __name__ == "__main__":
                 current_rank += same_score_count
                 same_score_count = 1
             leaderboard += f"""|-\n| <center><b>{current_rank}</b></center> || <center>[[用户:{sorted_users[i][0]}]]</center> || {'<font color="#4E4">' if current_rank <= 3 else ''}<center>{'<b>' if current_rank <= 5 else ''}{sorted_users[i][1]}{'</b>' if current_rank <= 5 else ''}</center>{'</font>' if current_rank <= 3 else ''}\n"""
-    leaderboard += "|-\n| colspan=\"3\" | 统计图表基于[https://github.com/yusancky/AllUp-Satwiki '''AllUp-Satwiki''']生成，于<small>（北京时间）</small>每天13时、22时<small>（可能有一定延迟）</small>自动更新。\n|}"
+    leaderboard += "|-\n| colspan=\"3\" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki '''AllUp''']于<small>（北京时间）</small>每天11时、15时、19时、23时<small>（可能有一定延迟）</small>自动更新。\n|}"
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
