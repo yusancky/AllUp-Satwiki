@@ -43,7 +43,7 @@ def build_wikitext_filename(s):
     last_colon_index = s.rfind(":")
     if last_colon_index != -1:
         s = s[last_colon_index + 1 :]
-    return s.replace('/', '--')
+    return s.replace("/", "--")
 
 
 def push(title: str, content: str):
@@ -51,7 +51,9 @@ def push(title: str, content: str):
         f"{build_wikitext_filename(title)}.wikitext", "w+", encoding="utf-8"
     ) as f:
         f.write(content)
-    with open("preview.md", "a+") as f:
-        f.write(f"```go\n{content}\n```")
+    with open("preview.md", "w+") as f:
+        f.write(
+            f"## Preview\n\nThe workflow builds content as shown below. \n\n```go\n{content}\n```"
+        )
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
