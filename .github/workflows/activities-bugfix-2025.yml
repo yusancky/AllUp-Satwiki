@@ -3,14 +3,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/common.yml'
+      - '.github/workflows/.common.yml'
       - '.github/workflows/activities-bugfix-2025.yml'
       - 'activities/bugfix-2025/**'
       - 'AllUp_utils/**'
       - 'requirements.txt'
   pull_request:
     paths:
-      - '.github/workflows/common.yml'
+      - '.github/workflows/.common.yml'
       - '.github/workflows/activities-bugfix-2025.yml'
       - 'activities/bugfix-2025/**'
       - 'AllUp_utils/**'
@@ -27,6 +27,6 @@ permissions:
   pull-requests: write
 jobs:
   activities-bugfix-2025:
-    uses: ./.github/workflows/common.yml
+    uses: ./.github/workflows/.common.yml
     with:
       script: activities/bugfix-2025/main.py
