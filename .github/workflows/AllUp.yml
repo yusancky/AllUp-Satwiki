@@ -3,6 +3,7 @@ on:
   push:
     branches: [ main ]
     paths:
+      - '.github/workflows/common.yml'
       - '.github/workflows/AllUp.yml'
       - 'main.py'
       - 'TSS-data/**'
@@ -10,6 +11,7 @@ on:
       - 'requirements.txt'
   pull_request:
     paths:
+      - '.github/workflows/common.yml'
       - '.github/workflows/AllUp.yml'
       - 'main.py'
       - 'TSS-data/**'
