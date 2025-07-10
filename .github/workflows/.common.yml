@@ -27,4 +27,3 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      - run: cat preview.md >> $GITHUB_STEP_SUMMARY
