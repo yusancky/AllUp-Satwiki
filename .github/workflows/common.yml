@@ -2,7 +2,7 @@ name: Common Workflow
 on:
   workflow_call:
     inputs:
-      script_path:
+      script:
         required: true
         type: string
 permissions:
