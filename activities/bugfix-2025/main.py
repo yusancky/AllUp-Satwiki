@@ -23,9 +23,9 @@ def show_rank(rank):
 def show_score(rank, score):
     match rank:
         case 1:
-            return f"<font color="#D6E"><center><b>{score}</b></center></font>"
+            return f'<font color="#D6E"><center><b>{score}</b></center></font>'
         case 2 | 3:
-            return f"<font color="#4E4"><center><b>{score}</b></center></font>"
+            return f'<font color="#4E4"><center><b>{score}</b></center></font>'
         case 4 | 5:
             return f"<center><b>{score}</b></center>"
         case _:
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         user_scores[username] += score
     if sorted_users := sorted(user_scores.items(), key=lambda x: x[1], reverse=True):
         current_rank, same_score_count = 1, 1
-        leaderboard += f'|-\n| <center>{show_rank(1)}</center> || <center>[[用户:{sorted_users[0][0]}]]</center> || {show_score(1, sorted_users[0][1])}\n'
+        leaderboard += f"|-\n| <center>{show_rank(1)}</center> || <center>[[用户:{sorted_users[0][0]}]]</center> || {show_score(1, sorted_users[0][1])}\n"
         for i in range(1, len(sorted_users)):
             if sorted_users[i][1] == sorted_users[i - 1][1]:
                 same_score_count += 1
