@@ -5,6 +5,33 @@ import AllUp_utils.wiki
 from collections import defaultdict
 from re import findall
 
+RANK_EMOJI = {1: "🥇", 2: "🥈", 3: "🥉"}
+RANK_STYLE = {
+    1: {"color": "#D6E", "bold": True},
+    2: {"color": "#4E4", "bold": True},
+    3: {"color": "#4E4", "bold": True},
+    4: {"bold": True},
+    5: {"bold": True},
+}
+
+
+def show_rank(rank):
+    if icon := RANK_EMOJI.get(rank):
+        return icon
+    if rank <= 5:
+        return f"<b>{rank}</b>"
+    return str(rank)
+
+
+def show_score(rank, score):
+    st = RANK_STYLE.get(rank, {})
+    inner = f"<b>{score}</b>" if st.get("bold") else str(score)
+    centered = f"<center>{inner}</center>"
+    if color := st.get("color"):
+        return f'<font color="{color}">{centered}</font>'
+    return centered
+
+
 if __name__ == "__main__":
     leaderboard = '{| class="wikitable" style="background: #FFF"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
@@ -17,13 +44,13 @@ if __name__ == "__main__":
         user_scores[username] += score
     if sorted_users := sorted(user_scores.items(), key=lambda x: x[1], reverse=True):
         current_rank, same_score_count = 1, 1
-        leaderboard += f'|-\n| <center><b>1</b></center> || <center>[[用户:{sorted_users[0][0]}]]</center> || <font color="#D6E"><center><b>{sorted_users[0][1]}</b></center></font>\n'
+        leaderboard += f"|-\n| <center>{show_rank(1)}</center> || <center>[[用户:{sorted_users[0][0]}]]</center> || {show_score(1, sorted_users[0][1])}\n"
         for i in range(1, len(sorted_users)):
             if sorted_users[i][1] == sorted_users[i - 1][1]:
                 same_score_count += 1
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            leaderboard += f"""|-\n| <center><b>{current_rank}</b></center> || <center>[[用户:{sorted_users[i][0]}]]</center> || {'<font color="#4E4">' if current_rank <= 3 else ''}<center>{'<b>' if current_rank <= 5 else ''}{sorted_users[i][1]}{'</b>' if current_rank <= 5 else ''}</center>{'</font>' if current_rank <= 3 else ''}\n"""
+            leaderboard += f"|-\n| <center>{show_rank(current_rank)}</center> || <center>[[用户:{sorted_users[i][0]}]]</center> || {show_score(current_rank, sorted_users[i][1])}\n"
     leaderboard += "|-\n| colspan=\"3\" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki '''AllUp''']于<small>（北京时间）</small>每天11时、15时、19时、23时<small>（可能有一定延迟）</small>自动更新。\n|}"
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
