@@ -5,31 +5,31 @@ import AllUp_utils.wiki
 from collections import defaultdict
 from re import findall
 
+RANK_EMOJI = {1: "🥇", 2: "🥈", 3: "🥉"}
+RANK_STYLE = {
+    1: {"color": "#D6E", "bold": True},
+    2: {"color": "#4E4", "bold": True},
+    3: {"color": "#4E4", "bold": True},
+    4: {"bold": True},
+    5: {"bold": True},
+}
+
 
 def show_rank(rank):
-    match rank:
-        case 1:
-            return "🥇"
-        case 2:
-            return "🥈"
-        case 3:
-            return "🥉"
-        case 4 | 5:
-            return f"<b>{rank}</b>"
-        case _:
-            return str(rank)
+    if icon := RANK_EMOJI.get(rank):
+        return icon
+    if rank <= 5:
+        return f"<b>{rank}</b>"
+    return str(rank)
 
 
 def show_score(rank, score):
-    match rank:
-        case 1:
-            return f'<font color="#D6E"><center><b>{score}</b></center></font>'
-        case 2 | 3:
-            return f'<font color="#4E4"><center><b>{score}</b></center></font>'
-        case 4 | 5:
-            return f"<center><b>{score}</b></center>"
-        case _:
-            return f"<center>{score}</center>"
+    st = RANK_STYLE.get(rank, {})
+    inner = f"<b>{score}</b>" if st.get("bold") else str(score)
+    centered = f"<center>{inner}</center>"
+    if color := st.get("color"):
+        return f'<font color="{color}">{centered}</font>'
+    return centered
 
 
 if __name__ == "__main__":
