@@ -5,33 +5,23 @@ import AllUp_utils.wiki
 from collections import defaultdict
 from re import findall
 
-RANK_EMOJI = {1: "🥇", 2: "🥈", 3: "🥉"}
-RANK_STYLE = {
-    1: {"color": "#D6E", "bold": True},
-    2: {"color": "#4E4", "bold": True},
-    3: {"color": "#4E4", "bold": True},
-    4: {"bold": True},
-    5: {"bold": True},
-}
-
 
 def show_rank(rank):
-    if icon := RANK_EMOJI.get(rank):
+    if icon := {1: "🥇", 2: "🥈", 3: "🥉"}.get(rank):
         return icon
-    if rank <= 5:
-        return f'<font style="font-family: TitilliumWeb-Bold";><b>{rank}</b></font>'
-    return f'<font style="font-family: TitilliumWeb-Bold";>{rank}</font>'
+    return f'<font style="font-family: formula1-black";>{rank}</font>'
 
 
 def show_score(rank, score):
-    st = RANK_STYLE.get(rank, {})
-    inner = f"<b>{score}</b>" if st.get("bold") else str(score)
-    formatted = (
-        f'<font style="font-family: TitilliumWeb-Bold";><center>{inner}</center></font>'
-    )
-    if color := st.get("color"):
-        return f'<font color="{color}">{formatted}</font>'
-    return formatted
+    if rank == 1:
+        return f"""<font color="#D6E" style="font-family: formula1-black";><center>{score}</center></font>"""
+    if rank <= 3:
+        return f"""<font color="#4E4" style="font-family: formula1-black";><center>{score}</center></font>"""
+    if rank <= 5:
+        return f"""<font style="font-family: formula1-black";><center>{score}</center></font>"""
+    if rank <= 7:
+        return f"""<font style="font-family: TitilliumWeb-Bold";><center><b>{score}</b></center></font>"""
+    return f"""<font style="font-family: TitilliumWeb-Bold";><center>{score}</center></font>"""
 
 
 if __name__ == "__main__":
@@ -54,5 +44,5 @@ if __name__ == "__main__":
                 current_rank += same_score_count
                 same_score_count = 1
             leaderboard += f"|-\n| <center>{show_rank(current_rank)}</center> || <center>[[用户:{sorted_users[i][0]}]]</center> || {show_score(current_rank, sorted_users[i][1])}\n"
-    leaderboard += '|-\n| colspan="3" | 排行榜由<font style="font-family: TitilliumWeb-Bold";>[https://github.com/yusancky/AllUp-Satwiki AllUp]</font>于<small>（北京时间）</small>每天<font style="font-family: TitilliumWeb-Bold";>14</font>时、<font style="font-family: TitilliumWeb-Bold";>23</font>时<small>（可能有一定延迟）</small>自动更新。\n|}'
+    leaderboard += '|-\n| colspan="3" | 排行榜由<font style="font-family: formula1-black";>[https://github.com/yusancky/AllUp-Satwiki AllUp]</font>每天<small>（北京时间）</small><font style="font-family: formula1-black";>14</font>时、<font style="font-family: formula1-black";>23</font>时<small>（存在一定延迟）</small>自动更新。\n|}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
