@@ -18,6 +18,8 @@ def show_score(rank, score):
     if rank <= 3:
         return f"""<font color="#4E4" style="font-family: formula1-black";><center>{score}</center></font>"""
     if rank <= 5:
+        return f"""<font style="font-family: formula1-black";><center>{score}</center></font>"""
+    if rank <= 7:
         return f"""<font style="font-family: TitilliumWeb-Bold";><center><b>{score}</b></center></font>"""
     return f"""<font style="font-family: TitilliumWeb-Bold";><center>{score}</center></font>"""
 
