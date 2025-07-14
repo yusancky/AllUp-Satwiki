@@ -18,7 +18,7 @@ on:
       - synchronize
       - reopened
   schedule:
-    - cron: '0 3,7,11,15 * 6,7,8 *'
+    - cron: '0 6,15 * 6,7,8 *'
   workflow_dispatch:
 permissions:
   contents: write
