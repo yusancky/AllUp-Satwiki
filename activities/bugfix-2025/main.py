@@ -18,10 +18,9 @@ RANK_STYLE = {
 def show_rank(rank):
     if icon := RANK_EMOJI.get(rank):
         return icon
-    elif rank <= 5:
+    if rank <= 5:
         return f'<font style="font-family: TitilliumWeb-Bold";><b>{rank}</b></font>'
-    else:
-        return f'<font style="font-family: TitilliumWeb-Bold";>{rank}</font>'
+    return f'<font style="font-family: TitilliumWeb-Bold";>{rank}</font>'
 
 
 def show_score(rank, score):
