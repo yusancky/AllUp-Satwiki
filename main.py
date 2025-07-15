@@ -104,24 +104,13 @@ def build_tiangong_chart():
   }},
   "tooltip": {{
     "trigger": "axis",
-    "axisPointer": {{
-      "type": "shadow"
-    }}
+    "axisPointer": {{"type": "shadow"}}
   }},
-  "grid": {{
-    "left": "3%",
-    "right": "4%",
-    "bottom": "3%",
-    "containLabel": true
-  }},
-  "xAxis": {{
-    "type": "value"
-  }},
+  "grid": {{"left": "3%", "right": "4%", "bottom": "3%", "containLabel": true}},
+  "xAxis": {{"type": "value"}},
   "yAxis": {{
     "type": "category",
-    "splitLine": {{
-      "show": false
-    }},
+    "splitLine": {{"show": false}},
     "data": {str(data_name).replace("'",'"')}
   }},
   "series": [
@@ -129,15 +118,9 @@ def build_tiangong_chart():
       "name": "发射时间",
       "type": "bar",
       "stack": "Total",
-      "itemStyle": {{
-        "borderColor": "transparent",
-        "color": "transparent"
-      }},
+      "itemStyle": {{"borderColor": "transparent", "color": "transparent"}},
       "emphasis": {{
-        "itemStyle": {{
-          "borderColor": "transparent",
-          "color": "transparent"
-        }}
+        "itemStyle": {{"borderColor": "transparent", "color": "transparent"}}
       }},
       "data": {start_date}
     }},
@@ -145,17 +128,14 @@ def build_tiangong_chart():
       "name": "已进行任务天数",
       "type": "bar",
       "stack": "Total",
-      "label": {{
-        "show": true,
-        "position": "inside"
-      }},
+      "label": {{"show": true, "position": "inside"}},
       "data": [
         {delta_days_with_data_color}
       ]
     }}
   ]
 }}
-|style=min-height:380px}}}}"""
+|style=min-height:580px}}}}"""
 
 
 def fetch_satellite_data():
