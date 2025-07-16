@@ -40,17 +40,10 @@ def pull(title: str, split_line=False):
         return ""
 
 
-def build_wikitext_filename(s):
-    last_colon_index = s.rfind(":")
-    if last_colon_index != -1:
-        s = s[last_colon_index + 1 :]
-    return s.replace("/", "--")
-
-
 def push(title: str, content: str):
-    with open(
-        f"{build_wikitext_filename(title)}.wikitext", "w+", encoding="utf-8"
-    ) as f:
+    last_colon_index = title.rfind(":")
+    wikitext_filename = (title[last_colon_index + 1 :] if last_colon_index != -1 else title).replace("/", "--") + ".wikitext"
+    with open(wikitext_filename, "w+", encoding="utf-8") as f:
         f.write(content)
     with open("preview.md", "w+") as f:
         f.write(
