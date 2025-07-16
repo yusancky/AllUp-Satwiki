@@ -2,6 +2,7 @@
 # Licensed under the Apache License 2.0. See License in the project root for license information.
 
 from os import environ
+from pwiki.gquery import revisions
 from pwiki.wiki import Wiki
 import requests
 
@@ -57,3 +58,10 @@ def push(title: str, content: str):
         )
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
+
+
+def get_last_revision(title: str):
+    if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
+        return next(revisions(wiki, title))[0].revid
+    else:
+        return -1
