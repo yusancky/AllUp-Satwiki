@@ -53,7 +53,7 @@ def push(title: str, content: str):
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
 
 
-def get_last_revision(title: str):
+def get_last_revid(title: str):
     if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
         return next(revisions(wiki, title))[0].revid
     else:
