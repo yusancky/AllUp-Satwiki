@@ -2,7 +2,7 @@
 # Licensed under the Apache License 2.0. See License in the project root for license information.
 
 from os import environ
-from pwiki.gquery import revisions
+from pwiki.gquery import GQuery
 from pwiki.wiki import Wiki
 import requests
 
@@ -42,7 +42,9 @@ def pull(title: str, split_line=False):
 
 def push(title: str, content: str):
     last_colon_index = title.rfind(":")
-    wikitext_filename = (title[last_colon_index + 1 :] if last_colon_index != -1 else title).replace("/", "--") + ".wikitext"
+    wikitext_filename = (
+        title[last_colon_index + 1 :] if last_colon_index != -1 else title
+    ).replace("/", "--") + ".wikitext"
     with open(wikitext_filename, "w+", encoding="utf-8") as f:
         f.write(content)
     with open("preview.md", "w+") as f:
@@ -55,6 +57,6 @@ def push(title: str, content: str):
 
 def get_last_revid(title: str):
     if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
-        return next(revisions(wiki, title))[0].revid
+        return next(GQuery.revisions(wiki, title))[0].revid
     else:
         return -1
