@@ -2,6 +2,7 @@
 # Licensed under the Apache License 2.0. See License in the project root for license information.
 
 from os import environ
+from pwiki.gquery import GQuery
 from pwiki.wiki import Wiki
 import requests
 
@@ -39,17 +40,12 @@ def pull(title: str, split_line=False):
         return ""
 
 
-def build_wikitext_filename(s):
-    last_colon_index = s.rfind(":")
-    if last_colon_index != -1:
-        s = s[last_colon_index + 1 :]
-    return s.replace("/", "--")
-
-
 def push(title: str, content: str):
-    with open(
-        f"{build_wikitext_filename(title)}.wikitext", "w+", encoding="utf-8"
-    ) as f:
+    last_colon_index = title.rfind(":")
+    wikitext_filename = (
+        title[last_colon_index + 1 :] if last_colon_index != -1 else title
+    ).replace("/", "--") + ".wikitext"
+    with open(wikitext_filename, "w+", encoding="utf-8") as f:
         f.write(content)
     with open("preview.md", "w+") as f:
         f.write(
@@ -57,3 +53,10 @@ def push(title: str, content: str):
         )
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
+
+
+def get_last_revid(title: str):
+    if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
+        return next(GQuery.revisions(wiki, title))[0].revid
+    else:
+        return -1
