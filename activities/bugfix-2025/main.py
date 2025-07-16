@@ -46,5 +46,5 @@ if __name__ == "__main__":
                 current_rank += same_score_count
                 same_score_count = 1
             leaderboard += f"|-\n| <center>{show_rank(current_rank)}</center> || <center>[[用户:{sorted_users[i][0]}]]</center> || {show_score(current_rank, sorted_users[i][1])}\n"
-    leaderboard += f'|-\n| colspan="3" | 排行榜由<font style="font-family: formula1-black";>[https://github.com/yusancky/AllUp-Satwiki AllUp]</font>每小时自动获取数据并更新。<small>上次更新：<code>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} {revid}]</code></small>\n|}}'
+    leaderboard += f'|-\n| colspan="3" | 排行榜由<font style="font-family: formula1-black";>[https://github.com/yusancky/AllUp-Satwiki AllUp]</font>每小时自动获取数据并更新。<small>上次更新：<code><font style="font-family: formula1-black";>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} @{revid}]</font></code></small>\n|}}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
