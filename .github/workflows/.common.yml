@@ -5,6 +5,11 @@ on:
       script:
         required: true
         type: string
+    secrets:
+      BOT_PASSWORD:
+        required: true
+      X_AUTHKEY:
+        required: true
 permissions:
   contents: write
   pull-requests: write
