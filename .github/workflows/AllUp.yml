@@ -34,3 +34,4 @@ jobs:
     uses: ./.github/workflows/.common.yml
     with:
       script: main.py
+    secrets: inherit

@@ -4,6 +4,7 @@
 from os import environ
 from pwiki.wiki import Wiki
 import requests
+from unittest.mock import patch
 
 try:
     MAIN_REPO_BRANCH = (
@@ -18,18 +19,18 @@ try:
 except Exception:
     MAIN_REPO_BRANCH, TEST_DISPATCH, TEST_PR = False, False, False
 
-_original_session_init = requests.Session.__init__
 
+def create_wiki():
+    original_session_init = requests.Session.__init__
+    def patched_session_init(self, *args, **kwargs):
+        original_session_init(self, *args, **kwargs)
+        self.headers["X-authkey"] = environ["X_AUTHKEY"]
+    with patch("requests.Session.__init__", new=patched_session_init):
+        return Wiki("sat.huijiwiki.com", "雨伞CKY", environ["BOT_PASSWORD"])
 
-def _patched_session_init(self, *args, **kwargs):
-    _original_session_init(self, *args, **kwargs)
-    self.headers["X-authkey"] = environ["X_AUTHKEY"]
-
-
-requests.Session.__init__ = _patched_session_init
 
 if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
-    wiki = Wiki("sat.huijiwiki.com", "雨伞CKY", environ["BOT_PASSWORD"])
+    wiki = create_wiki()
 
 
 def pull(title: str, split_line=False):

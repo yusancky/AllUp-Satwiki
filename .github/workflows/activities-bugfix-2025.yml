@@ -30,3 +30,4 @@ jobs:
     uses: ./.github/workflows/.common.yml
     with:
       script: activities/bugfix-2025/main.py
+    secrets: inherit
