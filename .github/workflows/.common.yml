@@ -1,0 +1,35 @@
+name: Common Workflow
+on:
+  workflow_call:
+    inputs:
+      script:
+        required: true
+        type: string
+    secrets:
+      BOT_PASSWORD:
+        required: true
+      X_AUTHKEY:
+        required: true
+permissions:
+  contents: write
+  pull-requests: write
+env:
+  TZ: Asia/Shanghai
+jobs:
+  common_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: PYTHONPATH=. python ${{ inputs.script }}
+        env:
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
+          X_AUTHKEY: ${{ secrets.X_AUTHKEY }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+      - run: cat preview.md >> $GITHUB_STEP_SUMMARY
