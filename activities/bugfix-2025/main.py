@@ -5,28 +5,11 @@ import AllUp_utils.wiki
 from collections import defaultdict
 from re import findall
 
-
-def show_rank(rank):
-    if icon := {1: "🥇", 2: "🥈", 3: "🥉"}.get(rank):
-        return icon
-    return rank
-
-
-def show_score(rank, score):
-    if rank == 1:
-        return f"""<font color="#D6E">{score}</font>"""
-    if rank <= 3:
-        return f"""<font color="#4E4">{score}</font>"""
-    if score >= 100:
-        return score
-    return f"""<font style="font-family: TitilliumWeb-Bold";>{score}</font>"""
-
-
 if __name__ == "__main__":
-    leaderboard = '{| class="wikitable" style="background: #FFF;font-family: formula1-black;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
+    leaderboard = '{| class="wikitable" style="background: #EEE;font-family: formula1-black;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
     pulled_content, revid = AllUp_utils.wiki.pull(
-        "博客:天热了，让你站破产吧#公示"
+        "博客:天热了，让你站破产吧"
     ), AllUp_utils.wiki.get_last_revid("博客:天热了，让你站破产吧")
     matches = findall(pattern, pulled_content)
     user_scores = defaultdict(int)
@@ -43,6 +26,11 @@ if __name__ == "__main__":
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            leaderboard += f"|-\n| {show_rank(current_rank)} || [[用户:{sorted_users[i][0]}]] || {show_score(current_rank, sorted_users[i][1])}\n"
+            if current_rank <= 3:
+                leaderboard += f'|-\n| {["🥇", "🥈", "🥉"][current_rank - 1]} || [[User:{sorted_users[i][0]}]] || <font color="{"#D6E" if rank == 1 else "#4E4"}">{sorted_users[i][1])}</font>\n'
+            elif same_score_count == 1:
+                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
+            else:
+                leaderboard += f'|-\n| <font color="#CCD">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
     leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]每小时自动获取数据并更新。<small>上次更新：<code>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} @{revid}]</code></small>\n|}}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
