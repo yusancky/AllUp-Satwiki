@@ -23,7 +23,7 @@ def show_score(rank, score):
 
 
 if __name__ == "__main__":
-    leaderboard = '{| class="wikitable" style="background: #FFF;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
+    leaderboard = '{| class="wikitable" style="background: #FFF;font-family: formula1-black;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
     pulled_content, revid = AllUp_utils.wiki.pull(
         "博客:天热了，让你站破产吧#公示"
