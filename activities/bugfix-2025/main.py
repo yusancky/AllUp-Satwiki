@@ -9,7 +9,7 @@ from re import findall
 def show_rank(rank):
     if icon := {1: "🥇", 2: "🥈", 3: "🥉"}.get(rank):
         return icon
-    return str(rank)
+    return rank
 
 
 def show_score(rank, score):
@@ -18,7 +18,7 @@ def show_score(rank, score):
     if rank <= 3:
         return f"""<font color="#4E4">{score}</font>"""
     if score >= 100:
-        return str(score)
+        return score
     return f"""<font style="font-family: TitilliumWeb-Bold";>{score}</font>"""
 
 
