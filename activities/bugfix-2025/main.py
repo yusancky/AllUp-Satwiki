@@ -8,9 +8,8 @@ from re import findall
 if __name__ == "__main__":
     leaderboard = '{| class="wikitable" style="background: #EEE;font-family: formula1-black;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
-    pulled_content, revid = AllUp_utils.wiki.pull(
-        "博客:天热了，让你站破产吧"
-    ), AllUp_utils.wiki.get_last_revid("博客:天热了，让你站破产吧")
+    pulled_content = AllUp_utils.wiki.pull("博客:天热了，让你站破产吧")
+    revid = AllUp_utils.wiki.get_last_revid("博客:天热了，让你站破产吧")
     matches = findall(pattern, pulled_content)
     user_scores = defaultdict(int)
     for match in matches:
