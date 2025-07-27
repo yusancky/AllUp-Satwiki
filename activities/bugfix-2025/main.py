@@ -18,7 +18,7 @@ if __name__ == "__main__":
         user_scores[username] += score
     if sorted_users := sorted(user_scores.items(), key=lambda x: x[1], reverse=True):
         current_rank, same_score_count = 1, 1
-        leaderboard += f"|-\n| {show_rank(1)} || [[用户:{sorted_users[0][0]}]] || {show_score(1, sorted_users[0][1])}\n"
+        leaderboard += f'|-\n| 🥇 || [[用户:{sorted_users[0][0]}]] || <font color="#D6E">{sorted_users[0][1]}</font>\n'
         for i in range(1, len(sorted_users)):
             if sorted_users[i][1] == sorted_users[i - 1][1]:
                 same_score_count += 1
@@ -26,7 +26,7 @@ if __name__ == "__main__":
                 current_rank += same_score_count
                 same_score_count = 1
             if current_rank <= 3:
-                leaderboard += f'|-\n| {["🥇", "🥈", "🥉"][current_rank - 1]} || [[User:{sorted_users[i][0]}]] || <font color="{"#D6E" if rank == 1 else "#4E4"}">{sorted_users[i][1]}</font>\n'
+                leaderboard += f'|-\n| {["🥈", "🥉"][current_rank - 2]} || [[User:{sorted_users[i][0]}]] || <font color="#4E4">{sorted_users[i][1]}</font>\n'
             elif same_score_count == 1:
                 leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
             else:
