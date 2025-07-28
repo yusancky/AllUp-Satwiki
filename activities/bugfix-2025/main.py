@@ -31,5 +31,5 @@ if __name__ == "__main__":
                 leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
             else:
                 leaderboard += f'|-\n| <font color="#9CA3AF">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
-    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]每小时自动获取数据并更新。<small>上次更新：<code><font style="font-family: formula1-black";>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} @{revid}]</font></code></small>\n|}}'
+    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]定期自动获取数据并更新。<small>上次更新：<code><font style="font-family: formula1-black";>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} @{revid}]</font></code></small>\n|}}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
