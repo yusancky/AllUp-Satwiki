@@ -32,5 +32,5 @@ if __name__ == "__main__":
                 leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
             else:
                 leaderboard += f'|-\n| <font color="#9CA3AF">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
-    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]定期自动更新。<small>（上次更新：{strftime("%Y年%m月%d日%H时", localtime())}）</small>\n|}}'
+    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]定期自动更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix-2025.yml?query=branch%3Amain+is%3Asuccess {strftime("%Y年%m月%d日%H时", localtime())}]）</small>\n|}}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
