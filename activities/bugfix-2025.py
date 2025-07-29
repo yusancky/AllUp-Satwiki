@@ -4,12 +4,12 @@
 import AllUp_utils.wiki
 from collections import defaultdict
 from re import findall
+from time import localtime, strftime
 
 if __name__ == "__main__":
     leaderboard = '{| class="wikitable" style="background: #EEE;font-family: formula1-black;text-align:center;"\n! 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
     pulled_content = AllUp_utils.wiki.pull("博客:天热了，让你站破产吧")
-    revid = AllUp_utils.wiki.get_last_revid("博客:天热了，让你站破产吧")
     matches = findall(pattern, pulled_content)
     user_scores = defaultdict(int)
     for match in matches:
@@ -31,5 +31,5 @@ if __name__ == "__main__":
                 leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
             else:
                 leaderboard += f'|-\n| <font color="#9CA3AF">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
-    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]定期自动获取数据并更新。<small>上次更新：<code><font style="font-family: formula1-black";>[https://sat.huijiwiki.com/w/index.php?title=博客:天热了，让你站破产吧&oldid={revid} @{revid}]</font></code></small>\n|}}'
+    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]定期自动更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix-2025.yml?query=branch%3Amain+is%3Asuccess {strftime("%Y年%m月%d日%H时", localtime())}]）</small>\n|}}'
     AllUp_utils.wiki.push("Template:天热站破公示/leaderboard", leaderboard)
