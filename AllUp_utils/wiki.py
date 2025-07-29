@@ -54,10 +54,3 @@ def push(title: str, content: str):
         )
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
-
-
-def get_last_revid(title: str):
-    if MAIN_REPO_BRANCH or TEST_DISPATCH or TEST_PR:
-        return next(GQuery.revisions(wiki, title))[0].revid
-    else:
-        return -1
