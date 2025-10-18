@@ -19,10 +19,10 @@ jobs:
   common_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: actions/setup-python@v5.6.0
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: '3.14'
           cache: 'pip'
       - run: pip install -r requirements.txt
       - run: PYTHONPATH=. python ${{ inputs.script }}
