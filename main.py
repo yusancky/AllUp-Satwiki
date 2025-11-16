@@ -65,7 +65,7 @@ def fetch_starlink_data():
 
 
 def build_tiangong_chart():
-    """Build Tiangong Space Station missions chart."""
+    """[Deprecated] Build Tiangong Space Station missions chart."""
     missions = []
     today = date.today()
     with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as f:
@@ -203,7 +203,7 @@ def make(id):
         case "3":
             return fetch_starlink_data()
         case "4":
-            return build_tiangong_chart()
+            return "天宫空间站任务列表 ECharts 的生成已迁移到 [[:Module:EChartsTSS]]，可以通过 <code><nowiki>{{#invoke:EChartsTSS|main}}</nowiki></code> 调用。AllUp 不再提供 ECharts 的生成。{{需要更新}}"
         case "5":
             return fetch_satellite_data()
         case _:
