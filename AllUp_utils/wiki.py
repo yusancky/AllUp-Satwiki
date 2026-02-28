@@ -53,4 +53,9 @@ def push(title: str, content: str):
             f"## Preview\n\nThe workflow builds content as shown below. \n\n```go\n{content}\n```"
         )
     if MAIN_REPO_BRANCH or TEST_DISPATCH:
+        old_content = wiki.page_text(title)
+        if old_content == content:
+            print(f"Skip pushing {title}: content unchanged.")
+            return
+        print(f"Pushing {title} to wiki...")
         wiki.edit(title, content, "Edit via AllUp-Satwiki")
