@@ -193,19 +193,26 @@ def fetch_satellite_data():
 def make(id):
     """Main switch function."""
     match id:
-        case "t":
-            return strftime("%Y年%m月%d日%H时", localtime())
         case "1":
-            return "因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}"
+            return "目前该功能已集成到[[Html:Voyager]]，可以通过上述页面进行查看。"
             # return fetch_voyager_data()
         case "2":
-            return fetch_orbital_data()
+            print("Fetching Oribital Data")
+            orbital_data = fetch_orbital_data()
+            print(orbital_data)
+            return orbital_data
         case "3":
-            return fetch_starlink_data()
+            print("Fetching Starlink Data")
+            starlink_data = fetch_starlink_data()
+            print(starlink_data)
+            return starlink_data
         case "4":
             return "天宫空间站任务列表 ECharts 的生成已迁移到 [[:Module:EChartsTSS]]，可以通过 <code><nowiki>{{#invoke:EChartsTSS|main}}</nowiki></code> 调用。AllUp 不再提供 ECharts 的生成。{{需要更新}}"
         case "5":
-            return fetch_satellite_data()
+            print("Fetching Satellite Data")
+            satellite_data = fetch_satellite_data()
+            print(satellite_data)
+            return satellite_data
         case _:
             return "请输入正确的AllUp编号！"
 
@@ -213,7 +220,7 @@ def make(id):
 if __name__ == "__main__":
     chromedriver = AllUp_utils.web.configure_chromedriver()
     AllUp_data = {"switch_key": "1"}
-    for dataset in ["t"] + [str(i + 1) for i in range(5)] + ["#default"]:
+    for dataset in [str(i + 1) for i in range(5)] + ["#default"]:
         AllUp_data[dataset] = make(dataset)
     AllUp_content = f"<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>"
     AllUp_utils.wiki.push("Template:AllUp", AllUp_content)
