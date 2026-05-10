@@ -7,6 +7,7 @@ import AllUp_utils.wikitext
 from datetime import date
 from itertools import zip_longest
 from re import compile, findall
+from requests import RequestException
 from string.templatelib import Template
 from time import localtime, strftime
 
@@ -244,7 +245,7 @@ def build_satellite_switch(satellite):
             fetch_satellite_stats_page(satellite)
         )
         data_inner.update(counts)
-    except Exception as exception:
+    except (RequestException, ValueError) as exception:
         for section in range(4):
             data_inner[str(section + 1)] = str(exception)
     data_inner["#default"] = "请输入正确的选项名！"
