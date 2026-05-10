@@ -242,7 +242,7 @@ def build_satellite_switch(satellite):
         )
         data_inner.update(build_section_count_map(counts))
     except (RequestException, ValueError) as exception:
-        for section in range(4):
+        for section in range(EXPECTED_SATELLITE_COUNTER_COUNT):
             data_inner[str(section + 1)] = str(exception)
     data_inner["#default"] = "请输入正确的选项名！"
     return AllUp_utils.wikitext.build_switch(data_inner)
