@@ -88,12 +88,20 @@ def fetch_satellite_stats_page(satellite):
     )
 
 
-def extract_satellite_total_counts(web_data):
+def extract_satellite_total_counts(web_data: str) -> tuple[str, str, str, str]:
     """Extract four key numeric counters from a planet4589 stats page."""
     dataset = findall(SATELLITE_TOTAL_ROW_PATTERN, web_data)
     if not dataset:
         raise ValueError("未找到 Total 行数据。")
-    return {str(section + 1): dataset[0][section] for section in range(4)}
+    row = dataset[0]
+    return tuple(row[section] for section in range(4))
+
+
+def build_section_count_map(
+    counts: tuple[str, str, str, str],
+) -> dict[str, str]:
+    """Build section-keyed mapping from four extracted satellite counters."""
+    return {str(index + 1): value for index, value in enumerate(counts)}
 
 
 def fetch_voyager_data():
@@ -139,7 +147,7 @@ def fetch_starlink_data():
     """Fetch Starlink mission data."""
     web_data = fetch_satellite_stats_page("star")
     data = {"switch_key": "section"}
-    data.update(extract_satellite_total_counts(web_data))
+    data.update(build_section_count_map(extract_satellite_total_counts(web_data)))
     data["#default"] = "请输入正确的选项名！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -228,7 +236,7 @@ def build_satellite_switch(satellite):
         counts = extract_satellite_total_counts(
             fetch_satellite_stats_page(satellite)
         )
-        data_inner.update(counts)
+        data_inner.update(build_section_count_map(counts))
     except (RequestException, ValueError) as exception:
         for section in range(4):
             data_inner[str(section + 1)] = str(exception)
