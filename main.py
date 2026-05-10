@@ -94,7 +94,7 @@ def extract_satellite_total_counts(web_data: str) -> tuple[str, str, str, str]:
     if not dataset:
         raise ValueError("未找到 Total 行数据。")
     row = dataset[0]
-    return tuple(row[index] for index in range(4))
+    return tuple(row[:4])
 
 
 def build_section_count_map(
