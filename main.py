@@ -40,7 +40,7 @@ SATELLITE_CODES = [
     "ses",
 ]
 
-SATELLITE_TOTAL_COUNTER_COUNT = 4
+EXPECTED_SATELLITE_COUNTER_COUNT = 4
 
 
 def build_satellite_total_row_pattern():
@@ -96,9 +96,9 @@ def extract_satellite_total_counts(web_data: str) -> tuple[str, str, str, str]:
     if not dataset:
         raise ValueError("未找到 Total 行数据。")
     row = dataset[0]
-    if len(row) < SATELLITE_TOTAL_COUNTER_COUNT:
+    if len(row) < EXPECTED_SATELLITE_COUNTER_COUNT:
         raise ValueError("Total 行数据字段不足。")
-    return tuple(row[:SATELLITE_TOTAL_COUNTER_COUNT])
+    return row[:EXPECTED_SATELLITE_COUNTER_COUNT]
 
 
 def build_section_count_map(
