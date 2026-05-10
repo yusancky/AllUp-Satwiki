@@ -6,7 +6,106 @@ import AllUp_utils.wiki
 import AllUp_utils.wikitext
 from datetime import date
 from re import compile, findall
+from requests import RequestException
 from time import localtime, strftime
+
+SATELLITE_CODES = [
+    "star",
+    "ow",
+    "kp",
+    "stsh",
+    "xw",
+    "qf",
+    "ynh",
+    "lynk",
+    "esp",
+    "s1m",
+    "pln",
+    "iri",
+    "gbl",
+    "jil",
+    "slog",
+    "asts",
+    "swa",
+    "glo",
+    "spr",
+    "st3",
+    "par",
+    "gps",
+    "bei",
+    "oco",
+    "hwk",
+    "kep",
+    "int",
+    "ses",
+]
+
+EXPECTED_SATELLITE_COUNTER_COUNT = 4
+
+
+def build_satellite_total_row_pattern():
+    """Build a reusable regex pattern for Total rows on planet4589 stats pages."""
+    cell_specs = [
+        ("blue", True, False),
+        ("red", False, False),
+        ("red", False, False),
+        ("red", False, False),
+        ("red", False, False),
+        ("blue", True, False),
+        ("blue", True, False),
+        ("red", False, False),
+        ("red", False, False),
+        ("red", False, False),
+        ("blue", True, False),
+        ("blue", False, False),
+        ("blue", False, False),
+        ("blue", False, False),
+        ("blue", False, False),
+        ("blue", False, False),
+        ("green", False, False),
+        ("green", False, False),
+        ("green", False, False),
+        ("green", False, True),
+        ("green", False, True),
+        ("green", False, True),
+    ]
+
+    cells = []
+    for color, capture_value, allow_blank in cell_specs:
+        value_pattern = r" *" if allow_blank else r"\d*"
+        if capture_value:
+            value_pattern = f"({value_pattern})"
+        cells.append(rf'<TD style="color:{color}" *>{value_pattern}</TD>')
+
+    return r"<TR><TD>Total</TD>" + "".join(cells) + r"</TR>"
+
+
+SATELLITE_TOTAL_ROW_PATTERN = compile(build_satellite_total_row_pattern())
+
+
+def fetch_satellite_stats_page(satellite):
+    """Fetch a satellite stats page by satellite code."""
+    return AllUp_utils.web.fetch_data(
+        f"https://planet4589.org/space/con/{satellite}/stats.html"
+    )
+
+
+def extract_satellite_total_counts(web_data: str) -> tuple[str, str, str, str]:
+    """Extract four key numeric counters from a planet4589 stats page."""
+    dataset = findall(SATELLITE_TOTAL_ROW_PATTERN, web_data)
+    if not dataset:
+        raise ValueError("未找到 Total 行数据。")
+    row = dataset[0]
+    if len(row) < EXPECTED_SATELLITE_COUNTER_COUNT:
+        raise ValueError("Total 行数据字段不足。")
+    return row[:EXPECTED_SATELLITE_COUNTER_COUNT]
+
+
+def build_section_count_map(
+    counts: tuple[str, str, str, str],
+) -> dict[str, str]:
+    """Build section-keyed mapping from four extracted satellite counters."""
+    return {str(index + 1): value for index, value in enumerate(counts)}
 
 
 def fetch_voyager_data():
@@ -50,16 +149,9 @@ def fetch_orbital_data():
 
 def fetch_starlink_data():
     """Fetch Starlink mission data."""
-    web_data = AllUp_utils.web.fetch_data(
-        "https://planet4589.org/space/con/star/stats.html"
-    )
+    web_data = fetch_satellite_stats_page("star")
     data = {"switch_key": "section"}
-    dataset = findall(
-        r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',
-        web_data,
-    )
-    for section in range(4):
-        data[str(section + 1)] = dataset[0][section]
+    data.update(build_section_count_map(extract_satellite_total_counts(web_data)))
     data["#default"] = "请输入正确的选项名！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -68,8 +160,8 @@ def build_tiangong_chart():
     """[Deprecated] Build Tiangong Space Station missions chart."""
     missions = []
     today = date.today()
-    with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as f:
-        dataset = [line.strip() for line in f]
+    with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as tss_data_file:
+        dataset = [line.strip() for line in tss_data_file]
     for row in dataset:
         data = row.split(",")
         start_date = date.fromisoformat(data[2])
@@ -95,7 +187,10 @@ def build_tiangong_chart():
         start_date.insert(
             0, (mission[1] - date.fromisoformat("20210429")).days
         )
-        delta_days_with_data_color = f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},{delta_days_with_data_color}'
+        delta_days_with_data_color = (
+            f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},'
+            f"{delta_days_with_data_color}"
+        )
     delta_days_with_data_color = delta_days_with_data_color[:-1]
     return f"""{{{{#echarts:option={{
   "title": {{
@@ -111,7 +206,7 @@ def build_tiangong_chart():
   "yAxis": {{
     "type": "category",
     "splitLine": {{"show": false}},
-    "data": {str(data_name).replace("'",'"')}
+    "data": {str(data_name).replace("'", '"')}
   }},
   "series": [
     {{
@@ -138,54 +233,26 @@ def build_tiangong_chart():
 |style=min-height:580px}}}}"""
 
 
+def build_satellite_switch(satellite):
+    """Build switch data for one satellite code with resilient parsing."""
+    data_inner = {"switch_key": "section"}
+    try:
+        counts = extract_satellite_total_counts(
+            fetch_satellite_stats_page(satellite)
+        )
+        data_inner.update(build_section_count_map(counts))
+    except (RequestException, ValueError) as exception:
+        for section in range(EXPECTED_SATELLITE_COUNTER_COUNT):
+            data_inner[str(section + 1)] = str(exception)
+    data_inner["#default"] = "请输入正确的选项名！"
+    return AllUp_utils.wikitext.build_switch(data_inner)
+
+
 def fetch_satellite_data():
     """Fetch data for multiple satellites."""
     data = {"switch_key": "sat"}
-    for sat in [
-        "star",
-        "ow",
-        "kp",
-        "stsh",
-        "xw",
-        "qf",
-        "ynh",
-        "lynk",
-        "esp",
-        "s1m",
-        "pln",
-        "iri",
-        "gbl",
-        "jil",
-        "slog",
-        "asts",
-        "swa",
-        "glo",
-        "spr",
-        "st3",
-        "par",
-        "gps",
-        "bei",
-        "oco",
-        "hwk",
-        "kep",
-        "int",
-        "ses",
-    ]:
-        web_data = AllUp_utils.web.fetch_data(
-            f"https://planet4589.org/space/con/{sat}/stats.html"
-        )
-        data_inner = {"switch_key": "section"}
-        dataset = findall(
-            r'<TR><TD>Total</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:red" *>\d*</TD><TD style="color:blue" *>(\d*)</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:blue" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *>\d*</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD><TD style="color:green" *> *</TD></TR>',
-            web_data,
-        )
-        for section in range(4):
-            try:
-                data_inner[str(section + 1)] = dataset[0][section]
-            except Exception as e:
-                data_inner[str(section + 1)] = str(e)
-        data_inner["#default"] = "请输入正确的选项名！"
-        data[sat] = AllUp_utils.wikitext.build_switch(data_inner)
+    for satellite in SATELLITE_CODES:
+        data[satellite] = build_satellite_switch(satellite)
     data["#default"] = "请输入正确的卫星名！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -197,7 +264,6 @@ def make(id):
             return strftime("%Y年%m月%d日%H时", localtime())
         case "1":
             return "因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}"
-            # return fetch_voyager_data()
         case "2":
             return fetch_orbital_data()
         case "3":
@@ -210,10 +276,19 @@ def make(id):
             return "请输入正确的AllUp编号！"
 
 
+def build_allup_content(allup_data):
+    """Build final template content for AllUp."""
+    switch_content = AllUp_utils.wikitext.build_switch(allup_data)
+    return (
+        f"<includeonly>{switch_content}</includeonly>"
+        "<noinclude>[[Category:模板]]{{documentation}}</noinclude>"
+    )
+
+
 if __name__ == "__main__":
     chromedriver = AllUp_utils.web.configure_chromedriver()
-    AllUp_data = {"switch_key": "1"}
+    allup_data = {"switch_key": "1"}
     for dataset in ["t"] + [str(i + 1) for i in range(5)] + ["#default"]:
-        AllUp_data[dataset] = make(dataset)
-    AllUp_content = f"<includeonly>{AllUp_utils.wikitext.build_switch(AllUp_data)}</includeonly><noinclude>[[Category:模板]]{{{{documentation}}}}</noinclude>"
-    AllUp_utils.wiki.push("Template:AllUp", AllUp_content)
+        allup_data[dataset] = make(dataset)
+    allup_content = build_allup_content(allup_data)
+    AllUp_utils.wiki.push("Template:AllUp", allup_content)
