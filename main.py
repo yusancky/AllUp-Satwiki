@@ -40,6 +40,8 @@ SATELLITE_CODES = [
     "ses",
 ]
 
+SATELLITE_TOTAL_COUNTER_COUNT = 4
+
 
 def build_satellite_total_row_pattern():
     """Build a reusable regex pattern for Total rows on planet4589 stats pages."""
@@ -94,7 +96,7 @@ def extract_satellite_total_counts(web_data: str) -> tuple[str, str, str, str]:
     if not dataset:
         raise ValueError("未找到 Total 行数据。")
     row = dataset[0]
-    return tuple(row[:4])
+    return tuple(row[:SATELLITE_TOTAL_COUNTER_COUNT])
 
 
 def build_section_count_map(
@@ -156,8 +158,8 @@ def build_tiangong_chart():
     """[Deprecated] Build Tiangong Space Station missions chart."""
     missions = []
     today = date.today()
-    with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as file:
-        dataset = [line.strip() for line in file]
+    with open("TSS-data/TSS-data.wikitext", encoding="utf-8") as tss_data_file:
+        dataset = [line.strip() for line in tss_data_file]
     for row in dataset:
         data = row.split(",")
         start_date = date.fromisoformat(data[2])
