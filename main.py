@@ -5,10 +5,8 @@ import AllUp_utils.web
 import AllUp_utils.wiki
 import AllUp_utils.wikitext
 from datetime import date
-from itertools import zip_longest
 from re import compile, findall
 from requests import RequestException
-from string.templatelib import Template
 from time import localtime, strftime
 
 SATELLITE_CODES = [
@@ -83,25 +81,11 @@ def build_satellite_total_row_pattern():
 SATELLITE_TOTAL_ROW_PATTERN = compile(build_satellite_total_row_pattern())
 
 
-def render_t_string(template: Template):
-    """Render a Python 3.14 t-string template object to a plain string."""
-    rendered = []
-    for text, interpolation in zip_longest(
-        template.strings,
-        template.interpolations,
-        fillvalue=None,
-    ):
-        if text is not None:
-            rendered.append(text)
-        if interpolation is not None:
-            rendered.append(str(interpolation.value))
-    return "".join(rendered)
-
-
 def fetch_satellite_stats_page(satellite):
-    """Fetch a satellite stats page by satellite code with a t-string URL template."""
-    url_template = t"https://planet4589.org/space/con/{satellite}/stats.html"
-    return AllUp_utils.web.fetch_data(render_t_string(url_template))
+    """Fetch a satellite stats page by satellite code."""
+    return AllUp_utils.web.fetch_data(
+        f"https://planet4589.org/space/con/{satellite}/stats.html"
+    )
 
 
 def extract_satellite_total_counts(web_data):
