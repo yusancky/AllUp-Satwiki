@@ -1,18 +1,18 @@
-name: activities-bugfix-2025
+name: activities-bugfix
 on:
   push:
     branches: [ main ]
     paths:
       - '.github/workflows/.common.yml'
-      - '.github/workflows/activities-bugfix-2025.yml'
-      - 'activities/bugfix-2025.py'
+      - '.github/workflows/activities-bugfix.yml'
+      - 'activities/bugfix.py'
       - 'AllUp_utils/**'
       - 'requirements.txt'
   pull_request:
     paths:
       - '.github/workflows/.common.yml'
-      - '.github/workflows/activities-bugfix-2025.yml'
-      - 'activities/bugfix-2025.py'
+      - '.github/workflows/activities-bugfix.yml'
+      - 'activities/bugfix.py'
       - 'AllUp_utils/**'
       - 'requirements.txt'
     types:
@@ -20,15 +20,14 @@ on:
       - synchronize
       - reopened
   schedule:
-    - cron: '0 0,6,8,9,12,13,15,16 * 7,8 *'
-    - cron: '0 16 * 9 *'
+    - cron: '0 16 * 6,7,8,9 *'
   workflow_dispatch:
 permissions:
   contents: write
   pull-requests: write
 jobs:
-  activities-bugfix-2025:
+  activities-bugfix:
     uses: ./.github/workflows/.common.yml
     with:
-      script: activities/bugfix-2025.py
+      script: activities/bugfix.py
     secrets: inherit
