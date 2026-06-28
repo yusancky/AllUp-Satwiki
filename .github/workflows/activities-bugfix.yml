@@ -1,18 +1,18 @@
-name: activities-bugfix-2025
+name: activities-bugfix
 on:
   push:
     branches: [ main ]
     paths:
       - '.github/workflows/.common.yml'
-      - '.github/workflows/activities-bugfix-2025.yml'
-      - 'activities/bugfix-2025.py'
+      - '.github/workflows/activities-bugfix.yml'
+      - 'activities/bugfix.py'
       - 'AllUp_utils/**'
       - 'requirements.txt'
   pull_request:
     paths:
       - '.github/workflows/.common.yml'
-      - '.github/workflows/activities-bugfix-2025.yml'
-      - 'activities/bugfix-2025.py'
+      - '.github/workflows/activities-bugfix.yml'
+      - 'activities/bugfix.py'
       - 'AllUp_utils/**'
       - 'requirements.txt'
     types:
@@ -27,8 +27,8 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  activities-bugfix-2025:
+  activities-bugfix:
     uses: ./.github/workflows/.common.yml
     with:
-      script: activities/bugfix-2025.py
+      script: activities/bugfix.py
     secrets: inherit
