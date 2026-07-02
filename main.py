@@ -4,6 +4,8 @@
 import AllUp_utils.web
 import AllUp_utils.wiki
 import AllUp_utils.wikitext
+from astropy.time import Time
+from astroquery.jplhorizons import Horizons
 from datetime import date
 from re import compile, findall
 from requests import RequestException
@@ -109,18 +111,32 @@ def build_section_count_map(
 
 
 def fetch_voyager_data():
-    """[Deprecated] Fetch Voyager mission data."""
-    web_data = AllUp_utils.web.fetch_data(
-        "https://voyager.jpl.nasa.gov/mission/status/"
-    )
+    """
+    Fetch real-time Voyager mission data from NASA Horizons API.
+    """
+    VOYAGER_IDS = {"1": "-31", "2": "-32"}
+    AU_KM = 149597870.7
+    SECONDS_PER_DAY = 86400.0
     data = {"switch_key": "id"}
-    for id in [str(i + 1) for i in range(2)]:
-        data[id] = {"switch_key": "section"}
-        for section in ["km", "au", "kms", "aus", "speed", "lt"]:
-            data[id][section] = findall(
-                compile(f'id="voy{id}_{section}">(.*)</div>'), web_data
-            )[0]
-        data[id]["#default"] = "请输入正确的选项名！"
+    for voy_id in ["1", "2"]:
+        obj = Horizons(id=VOYAGER_IDS[voy_id], location="500", epochs=Time.now().jd)
+        eph = obj.ephemerides()
+        dist_au = eph["delta"][0]
+        lighttime_day = eph["lighttime"][0]
+        speed_km_s = eph["delta_rate"][0]
+        dist_km = dist_au * AU_KM
+        lighttime_hours = lighttime_day * 24.0
+        speed_au_day = speed_km_s * SECONDS_PER_DAY / AU_KM
+        data[voy_id] = {
+            "switch_key": "section",
+            "km": f"{dist_km:.0f}",
+            "au": f"{dist_au:.6f}",
+            "kms": f"{speed_km_s:.4f}",
+            "aus": f"{speed_au_day:.6f}",
+            "speed": f"{speed_km_s:.4f}",
+            "lt": f"{lighttime_hours:.2f}",
+            "#default": "请输入正确的选项名！",
+        }
     data["#default"] = "请输入正确的编号！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -140,9 +156,9 @@ def fetch_orbital_data():
         "Orbital period",
         "Epoch of osculation",
     ]:
-        data[section] = findall(
-            f"<td>{section}</td>\n *<td>([^<>]*)</td>", web_data
-        )[0].strip()
+        data[section] = findall(f"<td>{section}</td>\n *<td>([^<>]*)</td>", web_data)[
+            0
+        ].strip()
     data["#default"] = "请输入正确的选项名！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -165,9 +181,7 @@ def build_tiangong_chart():
     for row in dataset:
         data = row.split(",")
         start_date = date.fromisoformat(data[2])
-        end_date = (
-            date.fromisoformat(data[3]) if data[3] != "future" else today
-        )
+        end_date = date.fromisoformat(data[3]) if data[3] != "future" else today
         delta_days = (end_date - start_date).days
         missions.append(
             [
@@ -184,9 +198,7 @@ def build_tiangong_chart():
     data_name, start_date, delta_days_with_data_color = [], [], ""
     for mission in missions:
         data_name.insert(0, mission[0])
-        start_date.insert(
-            0, (mission[1] - date.fromisoformat("20210429")).days
-        )
+        start_date.insert(0, (mission[1] - date.fromisoformat("20210429")).days)
         delta_days_with_data_color = (
             f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},'
             f"{delta_days_with_data_color}"
@@ -237,9 +249,7 @@ def build_satellite_switch(satellite):
     """Build switch data for one satellite code with resilient parsing."""
     data_inner = {"switch_key": "section"}
     try:
-        counts = extract_satellite_total_counts(
-            fetch_satellite_stats_page(satellite)
-        )
+        counts = extract_satellite_total_counts(fetch_satellite_stats_page(satellite))
         data_inner.update(build_section_count_map(counts))
     except (RequestException, ValueError) as exception:
         for section in range(EXPECTED_SATELLITE_COUNTER_COUNT):
