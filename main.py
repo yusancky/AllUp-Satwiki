@@ -119,7 +119,7 @@ def fetch_voyager_data():
     SECONDS_PER_DAY = 86400.0
     data = {"switch_key": "id"}
     for voy_id in ["1", "2"]:
-        obj = Horizons(id=VOYAGER_IDS[voy_id], location="500", epochs=Time.now().jd)
+        obj = Horizons(id=VOYAGER_IDS[voy_id], location="399", epochs=Time.now().jd)
         eph = obj.ephemerides()
         dist_au = eph["delta"][0]
         lighttime_day = eph["lighttime"][0]
@@ -273,7 +273,7 @@ def make(id):
         case "t":
             return strftime("%Y年%m月%d日%H时", localtime())
         case "1":
-            return "因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}"
+            return fetch_voyager_data()
         case "2":
             return fetch_orbital_data()
         case "3":
