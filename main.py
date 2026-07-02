@@ -4,6 +4,8 @@
 import AllUp_utils.web
 import AllUp_utils.wiki
 import AllUp_utils.wikitext
+from astropy.time import Time
+from astroquery.jplhorizons import Horizons
 from datetime import date
 from re import compile, findall
 from requests import RequestException
@@ -109,18 +111,40 @@ def build_section_count_map(
 
 
 def fetch_voyager_data():
-    """[Deprecated] Fetch Voyager mission data."""
-    web_data = AllUp_utils.web.fetch_data(
-        "https://voyager.jpl.nasa.gov/mission/status/"
-    )
+    """
+    Fetch real-time Voyager mission data from NASA Horizons API.
+    """
+    VOYAGER_IDS = {"1": "-31", "2": "-32"}
+    AU_KM = 149597870.7
+    SECONDS_PER_DAY = 86400.0
     data = {"switch_key": "id"}
-    for id in [str(i + 1) for i in range(2)]:
-        data[id] = {"switch_key": "section"}
-        for section in ["km", "au", "kms", "aus", "speed", "lt"]:
-            data[id][section] = findall(
-                compile(f'id="voy{id}_{section}">(.*)</div>'), web_data
-            )[0]
-        data[id]["#default"] = "请输入正确的选项名！"
+    now_jd = Time.now().jd
+    for voy_id in ["1", "2"]:
+        earth_eph = Horizons(id=VOYAGER_IDS[voy_id], location="399", epochs=now_jd).ephemerides()
+        sun_eph = Horizons(id=VOYAGER_IDS[voy_id], location="10", epochs=now_jd).ephemerides()
+        dist_au_earth = earth_eph["delta"][0]
+        lighttime_day_earth = earth_eph["lighttime"][0]
+        speed_earth_km_s = earth_eph["delta_rate"][0]
+        dist_km_earth = dist_au_earth * AU_KM
+        lighttime_hours_earth = lighttime_day_earth * 24.0
+        dist_au_sun = sun_eph["delta"][0]
+        lighttime_day_sun = sun_eph["lighttime"][0]
+        speed_sun_km_s = sun_eph["delta_rate"][0]
+        dist_km_sun = dist_au_sun * AU_KM
+        lighttime_hours_sun = lighttime_day_sun * 24.0
+        data[voy_id] = {
+            "switch_key": "section",
+            "km": f"{dist_km_earth:.0f}",
+            "au": f"{dist_au_earth:.6f}",
+            "kms": f"{dist_km_sun:.0f}",
+            "aus": f"{dist_au_sun:.6f}",
+            "speed": f"{speed_earth_km_s:.4f}",
+            "speeds": f"{speed_sun_km_s:.4f}",
+            "lt": f"{lighttime_hours_earth:.2f}",
+            "lts": f"{lighttime_hours_sun:.2f}",
+            "#default": "请输入正确的选项名！",
+        }
+
     data["#default"] = "请输入正确的编号！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -140,9 +164,9 @@ def fetch_orbital_data():
         "Orbital period",
         "Epoch of osculation",
     ]:
-        data[section] = findall(
-            f"<td>{section}</td>\n *<td>([^<>]*)</td>", web_data
-        )[0].strip()
+        data[section] = findall(f"<td>{section}</td>\n *<td>([^<>]*)</td>", web_data)[
+            0
+        ].strip()
     data["#default"] = "请输入正确的选项名！"
     return AllUp_utils.wikitext.build_switch(data)
 
@@ -165,9 +189,7 @@ def build_tiangong_chart():
     for row in dataset:
         data = row.split(",")
         start_date = date.fromisoformat(data[2])
-        end_date = (
-            date.fromisoformat(data[3]) if data[3] != "future" else today
-        )
+        end_date = date.fromisoformat(data[3]) if data[3] != "future" else today
         delta_days = (end_date - start_date).days
         missions.append(
             [
@@ -184,9 +206,7 @@ def build_tiangong_chart():
     data_name, start_date, delta_days_with_data_color = [], [], ""
     for mission in missions:
         data_name.insert(0, mission[0])
-        start_date.insert(
-            0, (mission[1] - date.fromisoformat("20210429")).days
-        )
+        start_date.insert(0, (mission[1] - date.fromisoformat("20210429")).days)
         delta_days_with_data_color = (
             f'{{"value": {mission[2]}, "itemStyle": {{"color": "{mission[3]}"}} }},'
             f"{delta_days_with_data_color}"
@@ -237,9 +257,7 @@ def build_satellite_switch(satellite):
     """Build switch data for one satellite code with resilient parsing."""
     data_inner = {"switch_key": "section"}
     try:
-        counts = extract_satellite_total_counts(
-            fetch_satellite_stats_page(satellite)
-        )
+        counts = extract_satellite_total_counts(fetch_satellite_stats_page(satellite))
         data_inner.update(build_section_count_map(counts))
     except (RequestException, ValueError) as exception:
         for section in range(EXPECTED_SATELLITE_COUNTER_COUNT):
@@ -263,7 +281,7 @@ def make(id):
         case "t":
             return strftime("%Y年%m月%d日%H时", localtime())
         case "1":
-            return "因上游数据进行格式调整，<code><nowiki>{{AllUp|1}}</nowiki></code> 暂时停用！{{需要更新}}"
+            return fetch_voyager_data()
         case "2":
             return fetch_orbital_data()
         case "3":
