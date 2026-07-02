@@ -118,25 +118,33 @@ def fetch_voyager_data():
     AU_KM = 149597870.7
     SECONDS_PER_DAY = 86400.0
     data = {"switch_key": "id"}
+    now_jd = Time.now().jd
     for voy_id in ["1", "2"]:
-        obj = Horizons(id=VOYAGER_IDS[voy_id], location="399", epochs=Time.now().jd)
-        eph = obj.ephemerides()
-        dist_au = eph["delta"][0]
-        lighttime_day = eph["lighttime"][0]
-        speed_km_s = eph["delta_rate"][0]
-        dist_km = dist_au * AU_KM
-        lighttime_hours = lighttime_day * 24.0
-        speed_au_day = speed_km_s * SECONDS_PER_DAY / AU_KM
+        earth_eph = Horizons(id=VOYAGER_IDS[voy_id], location="399", epochs=now_jd).ephemerides()
+        sun_eph = Horizons(id=VOYAGER_IDS[voy_id], location="10", epochs=now_jd).ephemerides()
+        dist_au_earth = earth_eph["delta"][0]
+        lighttime_day_earth = earth_eph["lighttime"][0]
+        speed_earth_km_s = earth_eph["delta_rate"][0]
+        dist_km_earth = dist_au_earth * AU_KM
+        lighttime_hours_earth = lighttime_day_earth * 24.0
+        dist_au_sun = sun_eph["delta"][0]
+        lighttime_day_sun = sun_eph["lighttime"][0]
+        speed_sun_km_s = sun_eph["delta_rate"][0]
+        dist_km_sun = dist_au_sun * AU_KM
+        lighttime_hours_sun = lighttime_day_sun * 24.0
         data[voy_id] = {
             "switch_key": "section",
-            "km": f"{dist_km:.0f}",
-            "au": f"{dist_au:.6f}",
-            "kms": f"{speed_km_s:.4f}",
-            "aus": f"{speed_au_day:.6f}",
-            "speed": f"{speed_km_s:.4f}",
-            "lt": f"{lighttime_hours:.2f}",
+            "km": f"{dist_km_earth:.0f}",
+            "au": f"{dist_au_earth:.6f}",
+            "kms": f"{dist_km_sun:.0f}",
+            "aus": f"{dist_au_sun:.6f}",
+            "speed": f"{speed_earth_km_s:.4f}",
+            "speeds": f"{speed_sun_km_s:.4f}",
+            "lt": f"{lighttime_hours_earth:.2f}",
+            "lts": f"{lighttime_hours_sun:.2f}",
             "#default": "请输入正确的选项名！",
         }
+
     data["#default"] = "请输入正确的编号！"
     return AllUp_utils.wikitext.build_switch(data)
 
