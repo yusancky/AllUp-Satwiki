@@ -20,7 +20,7 @@ on:
       - synchronize
       - reopened
   schedule:
-    - cron: '0 16 * 6,7,8,9 *'
+    - cron: '0 20 * 6,7,8,9 *'
   workflow_dispatch:
 permissions:
   contents: write
