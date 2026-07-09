@@ -19,8 +19,6 @@ on:
       - opened
       - synchronize
       - reopened
-  schedule:
-    - cron: '0 20 * 6,7,8,9 *'
   workflow_dispatch:
 permissions:
   contents: write
