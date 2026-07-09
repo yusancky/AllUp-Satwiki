@@ -27,5 +27,6 @@ jobs:
   activities-bugfix:
     uses: ./.github/workflows/.common.yml
     with:
+      requirements: activities/bugfix-requirements.txt
       script: activities/bugfix.py
     secrets: inherit
