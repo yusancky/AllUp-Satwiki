@@ -32,7 +32,7 @@ if __name__ == "__main__":
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            rank_color = ['#D6E', '#4E4', '#59E', '#FB2'][bisect_left([1, 4, 7, float('inf')], current_rank)]
+            rank_color = ['#D6E', '#59E', '#4E4', '#FB2'][bisect_left([1, 4, 7, float('inf')], current_rank)]
             leaderboard += f'|-\n| {f'''<font color="#9CA3AF">{current_rank}</font>''' if same_score_count >= 2 else current_rank} || [[User:{sorted_users[i][0]}]] || <font color="{rank_color}">{sorted_users[i][1]}</font>\n'
     leaderboard += f'|-\n| colspan="3" style="border-bottom-right-radius: 12px; text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix.yml?query=branch%3Amain+is%3Asuccess {strftime("%m-%d %H:%M", localtime())}]）</small>\n|}}'
     AllUp_utils.wiki.push(push_path, leaderboard)
