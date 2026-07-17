@@ -3,7 +3,6 @@ on:
   workflow_call:
     inputs:
       python-version:
-        required: true
         type: string
       requirements:
         type: string
