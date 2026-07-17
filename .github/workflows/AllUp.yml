@@ -33,5 +33,6 @@ jobs:
   AllUp:
     uses: ./.github/workflows/.common.yml
     with:
+      python-version: '3.15'
       script: main.py
     secrets: inherit
