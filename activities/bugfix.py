@@ -32,12 +32,10 @@ if __name__ == "__main__":
                 current_rank += same_score_count
                 same_score_count = 1
             if current_rank <= 4:
-                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || <font color="#4E4">{sorted_users[i][1]}</font>\n'
-            elif current_rank <= 7:
-                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || <font color="#FB2">{sorted_users[i][1]}</font>\n'
-            elif same_score_count >= 2:
-                leaderboard += f'|-\n| <font color="#9CA3AF">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n'
+                leaderboard += f'|-\n| {f'''<font color="#9CA3AF">{current_rank}</font>''' if same_score_count >= 2 else current_rank} || [[User:{sorted_users[i][0]}]] || <font color="#4E4">{sorted_users[i][1]}</font>\n'
+            elif current_rank > 7:
+                leaderboard += f'|-\n| {f'''<font color="#9CA3AF">{current_rank}</font>''' if same_score_count >= 2 else current_rank} || [[User:{sorted_users[i][0]}]] || <font color="#FB2">{sorted_users[i][1]}</font>\n'
             else:
-                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n'
+                leaderboard += f'|-\n| {f'''<font color="#9CA3AF">{current_rank}</font>''' if same_score_count >= 2 else current_rank} || [[User:{sorted_users[i][0]}]] || {sorted_users[i][1]}\n'
     leaderboard += f'|-\n| colspan="3" style="border-bottom-right-radius: 12px; text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix.yml?query=branch%3Amain+is%3Asuccess {strftime("%m-%d %H:%M", localtime())}]）</small>\n|}}'
     AllUp_utils.wiki.push(push_path, leaderboard)
