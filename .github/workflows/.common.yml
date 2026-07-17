@@ -4,6 +4,7 @@ on:
     inputs:
       python-version:
         type: string
+        default: '3.14'
       requirements:
         type: string
         default: 'requirements.txt'
