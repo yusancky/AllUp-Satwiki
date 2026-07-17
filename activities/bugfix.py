@@ -2,6 +2,7 @@
 # Licensed under the Apache License 2.0. See License in the project root for license information.
 
 import AllUp_utils.wiki
+from bisect import bisect_left
 from collections import defaultdict
 from re import findall
 from time import localtime, strftime
@@ -13,7 +14,7 @@ PATH_MAP = {
 
 if __name__ == "__main__":
     pull_path, push_path = PATH_MAP[localtime().tm_year]
-    leaderboard = '{| class="wikitable" style="background: #EEE; border: none; border-collapse: separate; border-spacing: 0; border-top-left-radius: 12px; overflow: hidden; font-family: formula1-black; text-align: center;"\n! style="border-top-left-radius: 12px;" | 排名 !! 用户名 !! 总评分\n'
+    leaderboard = '{| class="wikitable" style="background: #EEE; border: none; border-collapse: separate; border-spacing: 0; border-radius: 12px 0 12px 0; overflow: hidden; font-family: formula1-black; text-align: center;"\n! style="border-top-left-radius: 12px;" | 排名 !! 用户名 !! 总评分\n'
     pattern = r"\{\{天热站破公示\|1\|([^|]+)\|(\d{1,2}\.\d{1,2})\|[^|]+\|[^|]+\|[^|]+\|(\d{1,2})\}\}"
     pulled_content = AllUp_utils.wiki.pull(pull_path)
     matches = findall(pattern, pulled_content)
@@ -31,11 +32,7 @@ if __name__ == "__main__":
             else:
                 current_rank += same_score_count
                 same_score_count = 1
-            if current_rank <= 3:
-                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || <font color="#4E4">{sorted_users[i][1]}</font>\n'
-            elif same_score_count == 1:
-                leaderboard += f'|-\n| {current_rank} || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
-            else:
-                leaderboard += f'|-\n| <font color="#9CA3AF">{current_rank}</font> || [[User:{sorted_users[i][0]}]] || {f"""<font color="#FB2">{sorted_users[i][1]}</font>""" if sorted_users[i][1] >= 100 else sorted_users[i][1]}\n'
-    leaderboard += f'|-\n| colspan="3" style="text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix.yml?query=branch%3Amain+is%3Asuccess {strftime("%m-%d %H:%M", localtime())}]）</small>\n|}}'
+            rank_color = ['#D6E', '#59E', '#4E4', '#FB2'][bisect_left([1, 4, 7, float('inf')], current_rank)]
+            leaderboard += f'|-\n| {f'''<font color="#9CA3AF">{current_rank}</font>''' if same_score_count >= 2 else current_rank} || [[User:{sorted_users[i][0]}]] || <font color="{rank_color}">{sorted_users[i][1]}</font>\n'
+    leaderboard += f'|-\n| colspan="3" style="border-bottom-right-radius: 12px; text-align:left;" | 排行榜由[https://github.com/yusancky/AllUp-Satwiki AllUp]更新。<small>（上次更新：[https://github.com/yusancky/AllUp-Satwiki/actions/workflows/activities-bugfix.yml?query=branch%3Amain+is%3Asuccess {strftime("%m-%d %H:%M", localtime())}]）</small>\n|}}'
     AllUp_utils.wiki.push(push_path, leaderboard)

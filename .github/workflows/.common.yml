@@ -2,6 +2,9 @@ name: Common Workflow
 on:
   workflow_call:
     inputs:
+      python-version:
+        type: string
+        default: '3.14'
       requirements:
         type: string
         default: 'requirements.txt'
@@ -25,7 +28,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.15'
+          python-version: ${{ inputs.python-version }}
           allow-prereleases: true
           cache: 'pip'
       - run: pip install -r ${{ inputs.requirements }}

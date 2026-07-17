@@ -6,15 +6,15 @@ on:
       - '.github/workflows/.common.yml'
       - '.github/workflows/activities-bugfix.yml'
       - 'activities/bugfix.py'
+      - 'activities/bugfix-requirements.txt'
       - 'AllUp_utils/**'
-      - 'requirements.txt'
   pull_request:
     paths:
       - '.github/workflows/.common.yml'
       - '.github/workflows/activities-bugfix.yml'
       - 'activities/bugfix.py'
+      - 'activities/bugfix-requirements.txt'
       - 'AllUp_utils/**'
-      - 'requirements.txt'
     types:
       - opened
       - synchronize
