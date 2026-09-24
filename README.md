@@ -1,8 +1,10 @@
+
+
 # AllUp-Satwiki
 
 ![Python: 3.15 | 3.16](https://img.shields.io/badge/Python-3.15%20%7C%203.16-python?style=social&logo=python&logoColor=blue) ![License: Apache-2.0](https://img.shields.io/github/license/yusancky/AllUp-Satwiki?style=social)
 
-AllUp-Satwiki 项目由 [雨伞CKY](https://github.com/yusancky) 维护，每天北京时间 9 时 26 分基于 GitHub Actions 自动化爬取、集合数据并同步运行结果到卫星百科，以便卫星百科数据动态更新。[^1]
+AllUp-Satwiki 项目由 [雨伞CKY](https://github.com/yusancky) 维护，每周一和周四北京时间 9 时 26 分基于 GitHub Actions 自动化爬取、集合数据并同步运行结果到卫星百科，以便卫星百科数据动态更新。[^1]
 
 ![最近 30 天内的贡献](https://repobeats.axiom.co/api/embed/3c013245586cfcc386dd553450db134d7617991c.svg)
 
