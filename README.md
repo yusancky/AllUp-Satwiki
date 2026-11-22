@@ -1,5 +1,3 @@
-
-
 # AllUp-Satwiki
 
 ![Python: 3.15 | 3.16](https://img.shields.io/badge/Python-3.15%20%7C%203.16-python?style=social&logo=python&logoColor=blue) ![License: Apache-2.0](https://img.shields.io/github/license/yusancky/AllUp-Satwiki?style=social)
